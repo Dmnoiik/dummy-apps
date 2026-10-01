@@ -1,0 +1,825 @@
+/* ==========================================================================
+   SQUARE REGISTER — 1:1 Coffee & Bakery Point of Sale Stylesheet
+   Design Language: Clean Square Slate (#f4f5f7), Pure White Tile Cards (#ffffff),
+   High-Contrast Neutral Black (#1a1a1a), Square Blue Action Accent (#006aff)
+   ========================================================================== */
+
+:root {
+  --bg-page: #f4f5f7;
+  --bg-surface: #ffffff;
+  --bg-hover: #ebeef2;
+  
+  --square-black: #1a1a1a;
+  --square-blue: #006aff;
+  --square-blue-hover: #0056d6;
+  --square-gray: #6b7280;
+  --square-border: #e5e7eb;
+  --square-border-dark: #d1d5db;
+  
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --shadow-tile: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-tile-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-ticket: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-page);
+  color: var(--square-black);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Square Register Header
+   ========================================================================== */
+.pos-header {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--square-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0.85rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pos-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--square-black);
+}
+
+.register-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--square-gray);
+  letter-spacing: 0.06em;
+}
+
+.pos-system-info {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.dining-toggle {
+  display: flex;
+  background-color: var(--bg-page);
+  border: 1px solid var(--square-border);
+  border-radius: 9999px;
+  padding: 0.25rem;
+}
+
+.btn-dining {
+  background: none;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  color: var(--square-gray);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-dining.active {
+  background-color: var(--square-black);
+  color: #ffffff;
+}
+
+.clock-badge {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--square-black);
+  background: var(--bg-page);
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--square-border);
+}
+
+.btn-header-tool {
+  background: none;
+  border: 1px solid var(--square-border);
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-main);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--square-black);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-header-tool:hover {
+  background-color: var(--bg-hover);
+}
+
+/* ==========================================================================
+   Main Layout: Catalog Grid (Left) + Ticket Tape (Right)
+   ========================================================================== */
+.pos-main {
+  flex: 1;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1.75rem;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .pos-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Category Tabs */
+.menu-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-nav {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.cat-tab {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--square-border);
+  border-radius: 9999px;
+  padding: 0.6rem 1.15rem;
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--square-gray);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.cat-tab:hover {
+  color: var(--square-black);
+  border-color: var(--square-border-dark);
+}
+
+.cat-tab.active {
+  background-color: var(--square-black);
+  color: #ffffff;
+  border-color: var(--square-black);
+}
+
+.menu-search-bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--square-border);
+  border-radius: 0.75rem;
+  padding: 0.65rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.menu-search-bar input {
+  flex: 1;
+  border: none;
+  background: none;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  color: var(--square-black);
+  outline: none;
+}
+
+.shortcut-tip {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--square-gray);
+  text-transform: uppercase;
+}
+
+/* Square Touch Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.pos-product-card,
+.product-tile {
+  background-color: var(--bg-surface);
+  border: 1.5px solid var(--square-border);
+  border-radius: 0.85rem;
+  padding: 1.15rem 1rem;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: var(--shadow-tile);
+}
+
+.pos-product-card:hover,
+.product-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-tile-hover);
+  border-color: var(--square-blue);
+}
+
+.pos-product-card:active,
+.product-tile:active {
+  transform: scale(0.98);
+}
+
+.tile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.tile-dept {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+}
+
+.tile-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: var(--square-blue);
+  background: rgba(0, 106, 255, 0.08);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.tile-title,
+.card-item-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--square-black);
+  line-height: 1.3;
+}
+
+.tile-desc {
+  font-size: 0.74rem;
+  color: var(--square-gray);
+  margin-top: 0.2rem;
+  line-height: 1.3;
+}
+
+.tile-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.85rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--square-border);
+}
+
+.tile-price,
+.card-item-price {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--square-black);
+}
+
+.tile-tap-hint {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--square-blue);
+}
+
+.empty-receipt-svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   Right Panel: Square Ticket Tape (Current Sale)
+   ========================================================================== */
+.ticket-section {
+  position: sticky;
+  top: 5.5rem;
+}
+
+.ticket-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--square-border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-ticket);
+  display: flex;
+  flex-direction: column;
+  min-height: 640px;
+}
+
+.ticket-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--square-border);
+}
+
+.ticket-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ticket-title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.ticket-num {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--square-gray);
+}
+
+.ticket-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.35rem;
+}
+
+.dining-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--square-gray);
+}
+
+.btn-void-ticket {
+  background: none;
+  border: none;
+  color: #e03a3e;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Ticket Items List */
+.ticket-items-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.ticket-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  text-align: center;
+  color: var(--square-gray);
+}
+
+.empty-cup {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ticket-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--square-border);
+}
+
+.item-left-desc {
+  flex: 1;
+}
+
+.item-name-line {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--square-black);
+}
+
+.item-modifiers-tag {
+  font-size: 0.72rem;
+  color: var(--square-gray);
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.item-right-price {
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-left: 1rem;
+}
+
+/* Ticket Financial Footer */
+.ticket-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--square-border);
+  background-color: #fafbfc;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--square-gray);
+}
+
+.summary-line.total-line {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--square-black);
+  margin-top: 0.25rem;
+}
+
+.tip-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--square-border);
+  border-bottom: 1px solid var(--square-border);
+}
+
+.tip-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--square-gray);
+}
+
+.tip-pills {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.tip-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--square-border);
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.55rem;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tip-btn.active {
+  background: var(--square-black);
+  color: #ffffff;
+  border-color: var(--square-black);
+}
+
+.tip-amount-val {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--square-black);
+}
+
+/* Action Buttons (Square Big Blue Charge) */
+.ticket-actions-grid {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.85rem;
+}
+
+.btn-ticket-secondary {
+  flex: 1;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--square-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--square-black);
+  transition: all 0.15s;
+}
+
+.btn-ticket-secondary:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+}
+
+.btn-ticket-primary {
+  flex: 2;
+  background-color: var(--square-blue);
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-ticket-primary:hover:not(:disabled) {
+  background-color: var(--square-blue-hover);
+}
+
+.btn-ticket-primary:disabled, .btn-ticket-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Modals
+   ========================================================================== */
+.pos-modal {
+  margin: auto;
+  border: none;
+  background: transparent;
+  padding: 1.5rem;
+  max-width: 520px;
+  width: 100%;
+}
+
+.pos-modal::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.modal-category-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--square-gray);
+  text-transform: uppercase;
+}
+
+.modal-item-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-top: 0.2rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  color: var(--square-gray);
+  cursor: pointer;
+}
+
+.modifier-group {
+  margin-bottom: 1.25rem;
+}
+
+.mod-group-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--square-gray);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.mod-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mod-pill {
+  background: var(--bg-page);
+  border: 1px solid var(--square-border);
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.85rem;
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mod-pill.active {
+  background: var(--square-black);
+  color: #ffffff;
+  border-color: var(--square-black);
+}
+
+.modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.btn-modal-cancel {
+  flex: 1;
+  background: var(--bg-page);
+  border: 1px solid var(--square-border);
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  font-family: var(--font-main);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-modal-confirm {
+  flex: 2;
+  background: var(--square-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  font-family: var(--font-main);
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Split Modal */
+.split-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.split-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.btn-step {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--square-border);
+  background: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.split-count {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.split-shares-card {
+  background: var(--bg-page);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.split-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.text-blue {
+  color: var(--square-blue);
+}
+
+.text-green {
+  color: #008751;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Receipt Tape Modal */
+.modal-receipt {
+  max-width: 420px;
+}
+
+.receipt-tape {
+  background: #ffffff;
+  border: 1px dashed var(--square-border-dark);
+  padding: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.tape-header h3 {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.tape-divider {
+  margin: 0.85rem 0;
+  color: #cbd5e1;
+}
+
+.tape-totals {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tape-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tape-bold {
+  font-weight: 800;
+  font-size: 1rem;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 0.35rem;
+}
+
+.receipt-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+/* Toast */
+.pos-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--square-black);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+  opacity: 0;
+  transition: all 0.25s;
+  pointer-events: none;
+}
+
+.pos-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

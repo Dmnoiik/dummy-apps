@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wise: International Money Transfers | Cheap, Fast &amp; Transparent</title>
+  <meta name="description" content="Wise (formerly TransferWise) lets you send money abroad with guaranteed mid-market exchange rates and transparent low fees." />
+
+  <!-- Fonts: Inter / Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Wise Header Bar -->
+  <header class="fx-header">
+    <div class="header-inner">
+      <div class="brand-box">
+        <svg class="wise-logo-svg" viewBox="0 0 120 30" width="105" height="26">
+          <text x="0" y="24" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="900" fill="#163300" letter-spacing="-0.04em">wise</text>
+          <path d="M72 8 L82 8 L76 22 Z" fill="#9fe870"/>
+        </svg>
+        <nav class="wise-top-links">
+          <a href="#" class="wise-link active">Personal</a>
+          <a href="#" class="wise-link">Business</a>
+          <a href="#" class="wise-link">Platform</a>
+        </nav>
+      </div>
+
+      <div class="header-guarantee">
+        <div class="rate-lock-pill">
+          <span class="pulsing-beacon"></span>
+          <span>Guaranteed rate for: <strong id="rateLockCountdown">30s</strong></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Wise Hero Layout -->
+  <main class="fx-layout">
+
+    <!-- WISE CONVERSION CALCULATOR CARD -->
+    <section class="calculator-card">
+      <div class="card-head">
+        <div>
+          <span class="card-label">International money transfer</span>
+          <h2 class="card-title">Send money at the real exchange rate</h2>
+        </div>
+        <button type="button" id="btnTriangularRoute" class="btn-tool-fx" title="Calculate multi-currency arbitrage pathways">
+          Route comparison
+        </button>
+      </div>
+
+      <!-- Send Currency Amount Input -->
+      <div class="currency-input-box">
+        <div class="input-head">
+          <label for="sendAmount">You send exactly</label>
+          <span class="bal-hint">Daily limit: $50,000</span>
+        </div>
+        <div class="input-field-row">
+          <input type="number" id="sendAmount" value="1000.00" step="10" min="1" />
+          <div class="currency-select-wrapper">
+            <select id="sendCurrency" class="currency-select">
+              <option value="USD" selected>USD — US Dollar</option>
+              <option value="EUR">EUR — Euro</option>
+              <option value="GBP">GBP — British Pound</option>
+              <option value="JPY">JPY — Japanese Yen</option>
+              <option value="CAD">CAD — Canadian Dollar</option>
+              <option value="AUD">AUD — Australian Dollar</option>
+              <option value="CHF">CHF — Swiss Franc</option>
+              <option value="SGD">SGD — Singapore Dollar</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wise Tree Flow Breakdown -->
+      <div class="fee-breakdown-card">
+        <div class="tree-bullet-track">
+          <div class="bullet-dot minus">−</div>
+          <div class="bullet-line"></div>
+          <div class="bullet-dot equals">=</div>
+          <div class="bullet-line"></div>
+          <div class="bullet-dot multiply">×</div>
+        </div>
+
+        <div class="fee-rows-wrapper">
+          <div class="fee-row">
+            <span class="fee-name">Our fee (0.35%)</span>
+            <span class="fee-val" id="feeAuraVal">$3.50</span>
+          </div>
+
+          <div class="fee-row">
+            <span class="fee-name">Transfer speed fee</span>
+            <span class="fee-val" id="feeSpeedVal">$0.00</span>
+          </div>
+
+          <div class="fee-row total-fee-row">
+            <span>Total amount we'll convert</span>
+            <strong id="amountConvertedVal">$996.50</strong>
+          </div>
+
+          <div class="rate-ticker-ribbon">
+            <span class="rate-eq-label">Guaranteed rate (48h): 1 <span id="baseCurrLabel">USD</span> =</span>
+            <strong class="rate-eq-val" id="midMarketRateDisplay">0.9240</strong>
+            <span class="quote-curr-label" id="quoteCurrLabel">EUR</span>
+            <span class="rate-status-tag">Mid-market</span>
+          </div>
+        </div>
+
+        <button type="button" id="btnSwapCurrencies" class="btn-swap-currency" aria-label="Swap Sending and Receiving Currencies" title="Swap currencies">
+          ⇅
+        </button>
+      </div>
+
+      <!-- Receive Currency Amount Input -->
+      <div class="currency-input-box receive-box">
+        <div class="input-head">
+          <label for="receiveAmount">Recipient gets</label>
+          <span class="fee-savings-tag" id="feeSavingsTag">You save $32.40 vs high street banks</span>
+        </div>
+        <div class="input-field-row">
+          <input type="number" id="receiveAmount" readonly />
+          <div class="currency-select-wrapper">
+            <select id="receiveCurrency" class="currency-select">
+              <option value="USD">USD — US Dollar</option>
+              <option value="EUR" selected>EUR — Euro</option>
+              <option value="GBP">GBP — British Pound</option>
+              <option value="JPY">JPY — Japanese Yen</option>
+              <option value="CAD">CAD — Canadian Dollar</option>
+              <option value="AUD">AUD — Australian Dollar</option>
+              <option value="CHF">CHF — Swiss Franc</option>
+              <option value="SGD">SGD — Singapore Dollar</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Speed Selector -->
+      <div class="speed-selector-group">
+        <label class="speed-label">TRANSFER SPEED &amp; PAYMENT METHOD:</label>
+        <div class="speed-options-grid">
+          <label class="speed-card active">
+            <input type="radio" name="speedOption" value="standard" checked />
+            <div class="speed-content">
+              <span class="speed-title">Fast bank transfer (ACH)</span>
+              <span class="speed-time">Within 4 Hours</span>
+              <span class="speed-cost">FREE ($0.00)</span>
+            </div>
+          </label>
+
+          <label class="speed-card">
+            <input type="radio" name="speedOption" value="fast" />
+            <div class="speed-content">
+              <span class="speed-title">Debit card transfer</span>
+              <span class="speed-time">Under 5 Minutes</span>
+              <span class="speed-cost">+$1.20</span>
+            </div>
+          </label>
+
+          <label class="speed-card">
+            <input type="radio" name="speedOption" value="swift" />
+            <div class="speed-content">
+              <span class="speed-title">SWIFT international wire</span>
+              <span class="speed-time">1–2 Business Days</span>
+              <span class="speed-cost">+$8.00</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Remit / Transfer CTA (Wise Lime Green) -->
+      <button type="button" id="btnInitiateTransfer" class="btn-primary-fx">
+        <span>Send money now</span>
+        <span class="btn-amount-preview" id="btnTransferPreview">$1,000.00 USD</span>
+      </button>
+    </section>
+
+    <!-- SIDEBAR: Market Context & Historical Sparkline -->
+    <aside class="market-sidebar">
+      <!-- 7-Day Historical Rate Sparkline -->
+      <div class="side-card">
+        <div class="side-card-header">
+          <span class="side-tag">7-DAY RATE TRACKER</span>
+          <h3 class="side-title" id="historyTitle">USD to EUR</h3>
+        </div>
+        <div class="sparkline-wrapper">
+          <svg id="sparklineSvg" viewBox="0 0 320 120" class="sparkline-svg">
+            <defs>
+              <linearGradient id="sparkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#163300" stop-opacity="0.15" />
+                <stop offset="100%" stop-color="#163300" stop-opacity="0.0" />
+              </linearGradient>
+            </defs>
+            <path id="sparklineArea" fill="url(#sparkGradient)" d="" />
+            <path id="sparklineLine" fill="none" stroke="#163300" stroke-width="2.5" d="" />
+          </svg>
+        </div>
+        <div class="sparkline-legend">
+          <span>7d Low: <strong id="histLow">0.9180</strong></span>
+          <span>7d High: <strong id="histHigh">0.9295</strong></span>
+        </div>
+      </div>
+
+      <!-- Traditional Bank Price Comparison -->
+      <div class="side-card comparison-card">
+        <h3 class="side-title">Compare our fees with banks</h3>
+        <p class="comp-desc">Traditional banks add hidden markups to the exchange rate. Wise never does.</p>
+
+        <div class="comp-table">
+          <div class="comp-row highlight-aura">
+            <span><strong>Wise</strong></span>
+            <strong class="text-green" id="compAuraFee">$3.50 fee &bull; 0.9240</strong>
+          </div>
+          <div class="comp-row">
+            <span>HSBC / Citi</span>
+            <span id="compBank1Fee">$36.50 fee &bull; 0.8920</span>
+          </div>
+          <div class="comp-row">
+            <span>Wells Fargo / Chase</span>
+            <span id="compBank2Fee">$42.00 fee &bull; 0.8875</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- MODAL 1: Wire Transfer & Recipient Details -->
+  <dialog class="fx-modal" id="transferModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-pill">Direct Bank Wire</span>
+          <h2 class="modal-title">Recipient &amp; IBAN Details</h2>
+        </div>
+        <button type="button" class="modal-close" id="btnCloseTransferModal">&times;</button>
+      </div>
+
+      <form id="wireForm" class="modal-form" novalidate>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="recipientName">Beneficiary Full Name <span class="req">*</span></label>
+            <input type="text" id="recipientName" required placeholder="Dr. Johannes Richter" />
+            <span class="err-text" id="errRecipientName"></span>
+          </div>
+          <div class="form-group">
+            <label for="recipientEmail">Notification Email <span class="req">*</span></label>
+            <input type="email" id="recipientEmail" required placeholder="beneficiary@company.de" />
+            <span class="err-text" id="errRecipientEmail"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="recipientIban">International Bank Account Number (IBAN) <span class="req">*</span></label>
+          <input type="text" id="recipientIban" required placeholder="DE89 3704 0044 0532 0130 00" />
+          <span class="err-text" id="errRecipientIban"></span>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="recipientBic">BIC / SWIFT Code (Optional)</label>
+            <input type="text" id="recipientBic" placeholder="DBEUDD33XXX" />
+          </div>
+          <div class="form-group">
+            <label for="transferMemo">Reference / Memo</label>
+            <input type="text" id="transferMemo" placeholder="Invoice #4829" />
+          </div>
+        </div>
+
+        <div class="transfer-summary-box">
+          <div class="sum-row">
+            <span>You are sending:</span>
+            <strong id="modalSendSummary">$1,000.00 USD</strong>
+          </div>
+          <div class="sum-row">
+            <span>Guaranteed recipient payout:</span>
+            <strong class="green-text" id="modalPayoutSummary">€920.76 EUR</strong>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="btnCancelTransfer">Cancel</button>
+          <button type="submit" class="btn-primary-fx btn-submit-wire">Confirm and pay</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL 2: Transfer Confirmation & Receipt -->
+  <dialog class="fx-modal" id="confirmModal">
+    <div class="modal-card modal-confirm">
+      <div class="confirm-icon-circle">✓</div>
+      <h2 class="confirm-title">Transfer on its way!</h2>
+      <p class="confirm-sub">Your payment has been booked with Wise at the guaranteed rate.</p>
+
+      <div class="receipt-card">
+        <div class="rec-row">
+          <span>Tracking Reference:</span>
+          <strong id="recRefCode">#WSE-849102</strong>
+        </div>
+        <div class="rec-row">
+          <span>Target Beneficiary:</span>
+          <strong id="recBeneficiary">Johannes Richter</strong>
+        </div>
+        <div class="rec-row">
+          <span>Converted Payout:</span>
+          <strong id="recAmountSent" class="green-text">€920.76 EUR</strong>
+        </div>
+        <div class="rec-row">
+          <span>Estimated Delivery:</span>
+          <strong>Today within 4 hours</strong>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary-fx w-full" id="btnDoneConfirm">Done</button>
+    </div>
+  </dialog>
+
+  <!-- Notification Toast -->
+  <div class="fx-toast" id="fxToast" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

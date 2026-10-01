@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Binance Pro Futures — BTC/USDT Perpetual Trading Terminal</title>
+  <meta name="description" content="Trade cryptocurrency perpetual futures on Binance Pro. High-frequency live order book, real-time candlestick charts, up to 50x leverage, and deep liquidity." />
+
+  <!-- Fonts: Binance Inter / JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Binance Pro Navigation Bar -->
+  <header class="dex-topbar">
+    <div class="topbar-inner">
+      <div class="dex-brand">
+        <!-- Binance Yellow Diamond Icon -->
+        <svg class="binance-diamond" viewBox="0 0 24 24" width="24" height="24">
+          <path d="M12 2 L16 6 L12 10 L8 6 Z" fill="#f0b90b"/>
+          <path d="M6 8 L10 12 L6 16 L2 12 Z" fill="#f0b90b"/>
+          <path d="M18 8 L22 12 L18 16 L14 12 Z" fill="#f0b90b"/>
+          <path d="M12 14 L16 18 L12 22 L8 18 Z" fill="#f0b90b"/>
+          <path d="M12 7 L15 10 L12 13 L9 10 Z" fill="#f0b90b"/>
+        </svg>
+        <h1 class="brand-title">BINANCE <span class="pro-tag">PRO</span></h1>
+      </div>
+
+      <!-- Ticker Pair Selector & Live Stats -->
+      <div class="pair-stats-bar">
+        <div class="pair-selector-dropdown">
+          <select id="pairSelect" class="pair-select">
+            <option value="BTC" selected>BTC / USDT &bull; Bitcoin Perp</option>
+            <option value="ETH">ETH / USDT &bull; Ethereum Perp</option>
+            <option value="SOL">SOL / USDT &bull; Solana Perp</option>
+          </select>
+        </div>
+
+        <div class="stat-pill">
+          <span class="stat-label">MARK PRICE</span>
+          <strong class="stat-val text-green" id="indexPrice">$67,420.50</strong>
+        </div>
+
+        <div class="stat-pill">
+          <span class="stat-label">24H CHANGE</span>
+          <strong class="stat-val text-green" id="change24h">+4.82%</strong>
+        </div>
+
+        <div class="stat-pill">
+          <span class="stat-label">24H HIGH</span>
+          <span class="stat-val" id="high24h">$68,100.00</span>
+        </div>
+
+        <div class="stat-pill">
+          <span class="stat-label">24H LOW</span>
+          <span class="stat-val" id="low24h">$64,320.00</span>
+        </div>
+
+        <div class="stat-pill">
+          <span class="stat-label">24H VOL</span>
+          <span class="stat-val" id="vol24h">42,190 BTC</span>
+        </div>
+      </div>
+
+      <!-- User Account Info & Cash Balance -->
+      <div class="account-stats">
+        <div class="balance-card">
+          <span class="bal-label">USDT MARGIN BALANCE</span>
+          <strong class="bal-val text-yellow" id="accountEquity">$10,000.00</strong>
+        </div>
+        <button type="button" id="btnDepositDemo" class="btn-demo-cash">+ $1,000 TESTNET</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Trading Workspace Grid (Chart, Orderbook, Order Entry, Positions) -->
+  <main class="terminal-grid">
+
+    <!-- TOP LEFT: Candlestick Chart Area -->
+    <section class="panel chart-panel">
+      <div class="panel-header">
+        <div class="chart-controls">
+          <span class="chart-pair-name" id="chartPairTitle">BTC/USDT PERP &bull; 15M</span>
+          <div class="timeframe-buttons" id="timeframeButtons">
+            <button type="button" class="tf-btn" data-tf="1m">1m</button>
+            <button type="button" class="tf-btn" data-tf="5m">5m</button>
+            <button type="button" class="tf-btn active" data-tf="15m">15m</button>
+            <button type="button" class="tf-btn" data-tf="1h">1h</button>
+            <button type="button" class="tf-btn" data-tf="1d">1D</button>
+          </div>
+        </div>
+
+        <div class="chart-indicators">
+          <span class="indicator-tag">MA(7): <strong id="ma7Val" class="text-yellow">67,110.20</strong></span>
+          <span class="indicator-tag">MA(25): <strong id="ma25Val" class="text-purple">66,840.40</strong></span>
+          <button type="button" id="btnSimulateCrash" class="btn-tool-mini" title="Test High Frequency Market Volatility">VOLATILITY TEST</button>
+        </div>
+      </div>
+
+      <!-- HTML5 Canvas Candlestick Chart -->
+      <div class="chart-canvas-wrapper" id="canvasWrapper">
+        <canvas id="candleChartCanvas" width="900" height="420"></canvas>
+      </div>
+    </section>
+
+    <!-- TOP RIGHT: Live Order Book & Recent Trades -->
+    <aside class="panel orderbook-panel">
+      <div class="panel-header">
+        <span class="panel-title">ORDER BOOK</span>
+        <div class="orderbook-precision">0.1 USDT</div>
+      </div>
+
+      <div class="orderbook-content">
+        <!-- Column Headers -->
+        <div class="ob-row header-row">
+          <span>PRICE (USDT)</span>
+          <span>SIZE</span>
+          <span>TOTAL</span>
+        </div>
+
+        <!-- Asks (Sells - Red) -->
+        <div class="ob-list asks-list" id="asksContainer"></div>
+
+        <!-- Spread Banner -->
+        <div class="spread-bar">
+          <span class="spread-price text-green" id="midMarketPrice">$67,420.50</span>
+          <span class="spread-label">SPREAD: 0.10 (0.00%)</span>
+        </div>
+
+        <!-- Bids (Buys - Green) -->
+        <div class="ob-list bids-list" id="bidsContainer"></div>
+      </div>
+    </aside>
+
+    <!-- BOTTOM RIGHT: Order Entry Execution Form -->
+    <aside class="panel orderentry-panel">
+      <div class="panel-header">
+        <span class="panel-title">PLACE ORDER</span>
+        <span class="fee-badge">TAKER 0.04% &bull; MAKER 0.02%</span>
+      </div>
+
+      <!-- Long / Short Switcher -->
+      <div class="side-selector" role="radiogroup">
+        <button type="button" class="side-btn active" id="btnSideBuy" data-side="buy">OPEN LONG</button>
+        <button type="button" class="side-btn" id="btnSideSell" data-side="sell">OPEN SHORT</button>
+      </div>
+
+      <!-- Order Type Tabs -->
+      <div class="order-type-tabs">
+        <button type="button" class="type-btn active" data-type="limit">LIMIT</button>
+        <button type="button" class="type-btn" data-type="market">MARKET</button>
+      </div>
+
+      <!-- Order Input Form -->
+      <form id="orderForm" class="order-form" novalidate>
+        <!-- Limit Price Input -->
+        <div class="form-group" id="groupLimitPrice">
+          <label for="inputLimitPrice">PRICE</label>
+          <div class="input-unit-wrapper">
+            <input type="number" id="inputLimitPrice" step="0.1" value="67420.5" />
+            <span class="unit-tag">USDT</span>
+          </div>
+        </div>
+
+        <!-- Order Size / Amount Input -->
+        <div class="form-group">
+          <div class="label-with-bal">
+            <label for="inputAmount">SIZE</label>
+            <span class="avail-bal">Avail: <strong id="availUsdText">$10,000.00</strong></span>
+          </div>
+          <div class="input-unit-wrapper">
+            <input type="number" id="inputAmount" step="0.001" placeholder="0.00" />
+            <span class="unit-tag" id="assetUnitTag">BTC</span>
+          </div>
+        </div>
+
+        <!-- Percentage Allocation Buttons (25%, 50%, 75%, 100%) -->
+        <div class="pct-slider-row">
+          <button type="button" class="pct-btn" data-pct="25">25%</button>
+          <button type="button" class="pct-btn" data-pct="50">50%</button>
+          <button type="button" class="pct-btn" data-pct="75">75%</button>
+          <button type="button" class="pct-btn" data-pct="100">100%</button>
+        </div>
+
+        <!-- Leverage Slider (1x to 50x) -->
+        <div class="form-group">
+          <div class="label-with-bal">
+            <label for="leverageRange">LEVERAGE MULTIPLIER</label>
+            <strong class="text-yellow" id="leverageDisplay">10x</strong>
+          </div>
+          <input type="range" id="leverageRange" min="1" max="50" value="10" class="leverage-slider" />
+        </div>
+
+        <!-- Execution Recap -->
+        <div class="order-recap-box">
+          <div class="recap-row">
+            <span>Order Value:</span>
+            <span id="recapNotionalVal">$0.00</span>
+          </div>
+          <div class="recap-row">
+            <span>Required Margin:</span>
+            <span id="recapMarginVal">$0.00</span>
+          </div>
+          <div class="recap-row">
+            <span>Est. Liq Price:</span>
+            <span class="text-red" id="recapLiqPrice">$0.00</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="btnSubmitOrder" class="btn-execute-order btn-buy">
+          BUY / LONG BTC
+        </button>
+      </form>
+    </aside>
+
+    <!-- BOTTOM ROW: Positions & Open Orders Table -->
+    <section class="panel positions-panel">
+      <div class="panel-header">
+        <div class="positions-tabs">
+          <button type="button" class="pos-tab active">POSITIONS (<span id="posCountBadge">0</span>)</button>
+          <button type="button" class="pos-tab">OPEN ORDERS (0)</button>
+          <button type="button" class="pos-tab">TRADE HISTORY</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="positions-table" aria-label="Active Futures Positions">
+          <thead>
+            <tr>
+              <th>SYMBOL</th>
+              <th>SIZE</th>
+              <th>ENTRY PRICE</th>
+              <th>MARK PRICE</th>
+              <th>LIQ. PRICE</th>
+              <th>MARGIN</th>
+              <th>UNREALIZED PNL (ROE %)</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="positionsTableBody">
+            <tr class="empty-row" id="emptyPositionsRow">
+              <td colspan="8">No active positions. Submit an order to open perpetual contracts.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div class="terminal-toast" id="terminalToast" aria-live="polite"></div>
+
+  <!-- Terminal Engine Script -->
+  <script src="script.js"></script>
+</body>
+</html>

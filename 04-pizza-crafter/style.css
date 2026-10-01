@@ -1,0 +1,1461 @@
+/* ==========================================================================
+   ANTICA PIZZERIA NAPOLETANA DAL 1889 — Forno a Legna & Farina
+   Authentic Italian Neapolitan Pizzeria & Artisanal Crafting Workbench
+   Aesthetic: Florentine Terracotta, Carrara Marble, Olive Wood Peel,
+   Aged Parchment, Brass Badges, and Neapolitan Typography.
+   ========================================================================== */
+
+:root {
+  /* Italian Heritage Palette */
+  --terracotta: #9e3223;
+  --terracotta-dark: #7a2216;
+  --terracotta-deep: #54160d;
+  --terracotta-glow: rgba(158, 50, 35, 0.25);
+  
+  --olive-leaf: #384e2a;
+  --olive-dark: #24351b;
+  --olive-subtle: #edf2eb;
+  
+  --brass-gold: #bfa15f;
+  --brass-dark: #8c7136;
+  --brass-light: #f5eed9;
+  
+  --parchment: #fdfaf3;
+  --parchment-card: #ffffff;
+  --parchment-alt: #f7f2e7;
+  --parchment-border: #e6dcce;
+  --parchment-deep: #d9cdbd;
+
+  --charcoal-oven: #1c1816;
+  --charcoal-crust: #2c2522;
+  --text-primary: #211c19;
+  --text-secondary: #5c524c;
+  --text-muted: #8c7e75;
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Shadows & Textures */
+  --shadow-warm: 0 4px 20px rgba(54, 30, 20, 0.08);
+  --shadow-board: 0 20px 45px rgba(28, 24, 22, 0.22), 0 4px 12px rgba(28, 24, 22, 0.12);
+  --shadow-elevated: 0 16px 36px -8px rgba(84, 22, 13, 0.18);
+  --radius-card: 0.75rem;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--parchment);
+  background-image: 
+    radial-gradient(circle at 15% 25%, rgba(191, 161, 95, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(158, 50, 35, 0.03) 0%, transparent 45%);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Header: Antica Pizzeria Napoletana
+   ========================================================================== */
+.app-header {
+  background: linear-gradient(135deg, #1c1715 0%, #2a201c 100%);
+  color: #ffffff;
+  border-bottom: 2px solid var(--brass-gold);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.header-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0.85rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.italian-crest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 6px rgba(191, 161, 95, 0.4));
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #fff9f0;
+  line-height: 1.15;
+}
+
+.brand-tagline {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--brass-gold);
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.oven-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(191, 161, 95, 0.3);
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: #f7eed8;
+  letter-spacing: 0.05em;
+}
+
+.oven-status-badge strong {
+  color: #ff9d66;
+}
+
+.pulsing-ember {
+  width: 9px;
+  height: 9px;
+  background-color: #ff5e28;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff5e28, 0 0 18px #ff2200;
+  animation: emberPulse 2s infinite ease-in-out;
+}
+
+@keyframes emberPulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Cart Trigger: Il Vassoio */
+.cart-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.55rem 1.15rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(158, 50, 35, 0.35);
+  transition: all 0.2s ease;
+}
+
+.cart-trigger-btn:hover {
+  background: linear-gradient(135deg, #b03828 0%, var(--terracotta) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(158, 50, 35, 0.45);
+}
+
+.cart-label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.cart-badge {
+  background-color: #ffffff;
+  color: var(--terracotta-dark);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+}
+
+.cart-header-price {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: #ffedd5;
+}
+
+/* Heritage Sub-Navigation */
+.sub-nav-bar {
+  background-color: var(--parchment-alt);
+  border-bottom: 1px solid var(--parchment-border);
+  padding: 0.45rem 2rem;
+}
+
+.sub-nav-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heritage-text {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+}
+
+.dop-guarantee {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--olive-leaf);
+  letter-spacing: 0.05em;
+}
+
+.dop-seal {
+  background-color: var(--olive-leaf);
+  color: #ffffff;
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================================================
+   Builder Main Layout: Workbench & Customizer
+   ========================================================================== */
+.builder-layout {
+  max-width: 1480px;
+  margin: 1.5rem auto 2.5rem;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2rem;
+  align-items: start;
+  flex: 1;
+}
+
+@media (max-width: 1080px) {
+  .builder-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Left Column: Wood Peel Stage & Workbench
+   ========================================================================== */
+.canvas-panel {
+  background-color: var(--parchment-card);
+  border: 1px solid var(--parchment-border);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-warm);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.canvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--parchment-border);
+  padding-bottom: 1rem;
+}
+
+.canvas-title-group .pill-category {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--terracotta);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+}
+
+/* Half-and-Half Coverage Switcher */
+.coverage-selector {
+  display: flex;
+  background-color: var(--parchment-alt);
+  border: 1px solid var(--parchment-border);
+  padding: 3px;
+  border-radius: 0.5rem;
+}
+
+.coverage-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.4rem 0.85rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.coverage-btn.active {
+  background-color: var(--terracotta);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(158, 50, 35, 0.3);
+}
+
+/* Wood Board Stage */
+.pizza-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: radial-gradient(circle at center, #fbf7ee 0%, #ece2cd 100%);
+  border: 1px solid #dfd1b8;
+  border-radius: 0.75rem;
+  padding: 2.5rem 1.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.wood-board {
+  position: relative;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at 40% 40%, rgba(255, 230, 190, 0.25) 0%, transparent 60%),
+    linear-gradient(135deg, #c8955c 0%, #a26b34 35%, #884e1b 70%, #68370f 100%);
+  box-shadow: var(--shadow-board), inset 0 0 40px rgba(70, 35, 10, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 6px solid #572d0b;
+}
+
+@media (max-width: 520px) {
+  .wood-board {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+.board-handle {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 90px;
+  background: linear-gradient(to right, #884e1b, #a26b34, #68370f);
+  border-radius: 0 0 16px 16px;
+  border: 5px solid #572d0b;
+  border-top: none;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+
+.board-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background-color: #f5eed9;
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.pizza-interactive-wrapper {
+  position: relative;
+  width: 380px;
+  height: 380px;
+  z-index: 2;
+}
+
+@media (max-width: 520px) {
+  .pizza-interactive-wrapper {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+.pizza-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+}
+
+.pizza-divider {
+  position: absolute;
+  top: 15px;
+  bottom: 15px;
+  left: 50%;
+  width: 2px;
+  background: dashed rgba(255, 255, 255, 0.45);
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Slices Guide Overlay (Cut Lines) */
+.slices-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+/* Canvas Action Tools */
+.canvas-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-tool {
+  background-color: #ffffff;
+  border: 1px solid var(--parchment-border);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-tool:hover {
+  background-color: var(--parchment-alt);
+  color: var(--terracotta);
+  border-color: var(--terracotta);
+}
+
+/* Valori Nutrizionali Pill */
+.nutrition-pill-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 480px;
+  margin-top: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid var(--parchment-border);
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.nutri-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nutri-label {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.nutri-val {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.nutri-divider {
+  width: 1px;
+  height: 22px;
+  background-color: var(--parchment-border);
+}
+
+/* ==========================================================================
+   Right Column: Step-by-Step Artisanal Customizer
+   ========================================================================== */
+.customizer-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.config-card {
+  background-color: var(--parchment-card);
+  border: 1px solid var(--parchment-border);
+  border-radius: var(--radius-card);
+  padding: 1.35rem 1.5rem;
+  box-shadow: var(--shadow-warm);
+}
+
+.config-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.15rem;
+  border-bottom: 1px solid var(--parchment-alt);
+  padding-bottom: 0.75rem;
+}
+
+.step-num-badge {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--brass-light);
+  color: var(--brass-dark);
+  border: 1px solid var(--brass-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.config-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+  line-height: 1.2;
+}
+
+.config-sub {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.toppings-count-tag {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background-color: var(--brass-light);
+  color: var(--brass-dark);
+  border: 1px solid var(--brass-gold);
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+/* Option Groups & Forms */
+.option-group {
+  margin-bottom: 1.1rem;
+}
+
+.option-group:last-child {
+  margin-bottom: 0;
+}
+
+.group-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 0.45rem;
+}
+
+.size-pills-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+}
+
+.size-pill {
+  background-color: var(--parchment-alt);
+  border: 1.5px solid var(--parchment-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  transition: all 0.2s ease;
+}
+
+.size-pill:hover {
+  border-color: var(--terracotta);
+  background-color: #fffaf7;
+}
+
+.size-pill.active {
+  background-color: #ffffff;
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 2px var(--terracotta-glow), 0 4px 10px rgba(158, 50, 35, 0.1);
+}
+
+.size-pill.active .size-title {
+  color: var(--terracotta);
+  font-weight: 700;
+}
+
+.size-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.size-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Select Dropdown */
+.italian-select {
+  width: 100%;
+  appearance: none;
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238c7e75' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  border: 1.5px solid var(--parchment-border);
+  border-radius: 0.5rem;
+  padding: 0.65rem 2.5rem 0.65rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.italian-select:focus {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 2px var(--terracotta-glow);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gf-alert {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: #92400e;
+  background-color: #fef3c7;
+  border-left: 3px solid #d97706;
+  padding: 0.45rem 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.gf-alert.hidden {
+  display: none;
+}
+
+/* Pantry Tabs */
+.pantry-tabs-bar {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--parchment-border);
+  padding-bottom: 0.65rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--terracotta);
+}
+
+.tab-btn.active {
+  background-color: var(--terracotta);
+  color: #ffffff;
+}
+
+/* Dynamic Toppings Grid */
+.toppings-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.topping-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--parchment-alt);
+  border: 1px solid var(--parchment-border);
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.topping-card:hover {
+  background-color: #ffffff;
+  border-color: var(--brass-gold);
+}
+
+.topping-card.selected {
+  background-color: #ffffff;
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 1px var(--terracotta);
+}
+
+.topping-info {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* Ingredient Icon / Seal */
+.topping-emoji {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-size: 1.15rem;
+  background: var(--brass-light);
+  border-radius: 50%;
+  border: 1px solid rgba(191, 161, 95, 0.4);
+}
+
+.topping-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.topping-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.topping-price-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--terracotta);
+}
+
+.topping-badge-coverage {
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background-color: #fee2e2;
+  color: #991b1b;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+.btn-topping-toggle {
+  background: #ffffff;
+  border: 1px solid var(--parchment-border);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.topping-card.selected .btn-topping-toggle {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+}
+
+.topping-card:not(.selected) .btn-topping-toggle:hover {
+  background-color: var(--terracotta);
+  color: #ffffff;
+  border-color: var(--terracotta);
+}
+
+/* Step 4: Active Summary & Add to Tray */
+.active-summary-card {
+  background: linear-gradient(145deg, #ffffff 0%, var(--parchment-alt) 100%);
+  border: 1.5px solid var(--brass-gold);
+}
+
+.summary-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.summary-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+}
+
+.summary-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+  line-height: 1.3;
+}
+
+.summary-price-badge {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--terracotta);
+  line-height: 1;
+}
+
+.btn-inforna {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.95rem 1.4rem;
+  border-radius: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(158, 50, 35, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-inforna:hover {
+  background: linear-gradient(135deg, #b53826 0%, var(--terracotta) 100%);
+  box-shadow: 0 8px 22px rgba(158, 50, 35, 0.45);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Order Drawer: Il Vassoio
+   ========================================================================== */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(28, 24, 22, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  transition: opacity 0.3s ease;
+}
+
+.cart-overlay.hidden {
+  display: none;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 100vw;
+  background-color: var(--parchment);
+  border-left: 2px solid var(--brass-gold);
+  z-index: 210;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-drawer.hidden {
+  display: none;
+}
+
+.cart-drawer-header {
+  background: linear-gradient(135deg, #1c1715 0%, #2a201c 100%);
+  color: #ffffff;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--brass-gold);
+}
+
+.drawer-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff9f0;
+}
+
+.drawer-subtitle {
+  font-size: 0.75rem;
+  color: var(--brass-gold);
+}
+
+.btn-close-drawer {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+}
+
+.cart-items-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-item-card {
+  background-color: #ffffff;
+  border: 1px solid var(--parchment-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.cart-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+}
+
+.cart-item-price {
+  font-weight: 700;
+  color: var(--terracotta);
+}
+
+.cart-item-sub {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.cart-item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--parchment-alt);
+  padding-top: 0.5rem;
+}
+
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--parchment-alt);
+  border: 1px solid var(--parchment-border);
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.btn-qty {
+  background: transparent;
+  border: none;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.qty-val {
+  font-size: 0.85rem;
+  font-weight: 700;
+  min-width: 16px;
+  text-align: center;
+}
+
+.empty-tray-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-secondary);
+}
+
+.empty-crest-svg {
+  margin-bottom: 1rem;
+}
+
+.empty-tray-state h4 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+  margin-bottom: 0.35rem;
+}
+
+.empty-tray-state p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  max-width: 260px;
+}
+
+/* Promo Voucher Box */
+.cart-promo-box {
+  background-color: var(--parchment-alt);
+  border-top: 1px solid var(--parchment-border);
+  padding: 1rem 1.25rem;
+}
+
+.promo-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.promo-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.promo-input-row input {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1.5px solid var(--parchment-border);
+  border-radius: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.82rem;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  outline: none;
+}
+
+.promo-input-row input:focus {
+  border-color: var(--terracotta);
+}
+
+.btn-apply-promo {
+  background-color: var(--charcoal-oven);
+  color: #ffffff;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.45rem 1rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-apply-promo:hover {
+  background-color: var(--terracotta);
+}
+
+.promo-feedback-msg {
+  font-size: 0.72rem;
+  margin-top: 0.4rem;
+}
+
+.promo-feedback-msg.success {
+  color: #15803d;
+}
+
+.promo-feedback-msg.error {
+  color: #b91c1c;
+}
+
+/* Financial Footer */
+.cart-summary-footer {
+  background-color: #ffffff;
+  border-top: 2px solid var(--brass-gold);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.summary-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+}
+
+.summary-line.discount-line {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.summary-line.discount-line.hidden {
+  display: none;
+}
+
+.summary-line.total-line {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+  border-top: 1px dashed var(--parchment-border);
+  padding-top: 0.65rem;
+  margin-top: 0.25rem;
+}
+
+.summary-line.total-line span:last-child {
+  color: var(--terracotta);
+  font-size: 1.4rem;
+}
+
+.btn-proceed-checkout {
+  margin-top: 0.5rem;
+  width: 100%;
+  background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+  color: #ffffff;
+  border: none;
+  padding: 0.95rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(158, 50, 35, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-proceed-checkout:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b53826 0%, var(--terracotta) 100%);
+  transform: translateY(-1px);
+}
+
+.btn-proceed-checkout:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Modals: Checkout & Success (Baking In Forno)
+   ========================================================================== */
+.italian-modal {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: auto;
+  max-width: 520px;
+  width: calc(100% - 2rem);
+  outline: none;
+}
+
+.italian-modal::backdrop {
+  background-color: rgba(28, 24, 22, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+.modal-card {
+  background-color: var(--parchment);
+  border: 2px solid var(--brass-gold);
+  border-radius: var(--radius-card);
+  padding: 1.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--parchment-border);
+  padding-bottom: 0.75rem;
+}
+
+.modal-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--terracotta);
+  text-transform: uppercase;
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+}
+
+.btn-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.field-group {
+  margin-bottom: 1rem;
+}
+
+.field-group label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.field-group input {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1.5px solid var(--parchment-border);
+  border-radius: 0.45rem;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.field-group input:focus {
+  border-color: var(--terracotta);
+}
+
+.field-error {
+  font-size: 0.72rem;
+  color: #b91c1c;
+  margin-top: 0.3rem;
+  min-height: 1rem;
+}
+
+.checkout-total-recap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--parchment-alt);
+  border: 1px solid var(--parchment-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin: 1.25rem 0;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.checkout-total-recap strong {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--terracotta);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.btn-modal-cancel {
+  background: transparent;
+  border: 1px solid var(--parchment-border);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.45rem;
+  cursor: pointer;
+}
+
+.btn-modal-confirm {
+  background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-dark) 100%);
+  color: #ffffff;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.65rem 1.4rem;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-modal-confirm:hover {
+  background: linear-gradient(135deg, #b53826 0%, var(--terracotta) 100%);
+}
+
+.btn-modal-confirm.w-full {
+  width: 100%;
+}
+
+/* Success Card (In Forno) */
+.success-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.success-crest-svg {
+  margin-bottom: 0.75rem;
+  filter: drop-shadow(0 4px 12px rgba(255, 94, 40, 0.4));
+}
+
+.success-title {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--charcoal-crust);
+  margin-bottom: 0.25rem;
+}
+
+.success-sub {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.baking-tracker-box {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid var(--parchment-border);
+  border-radius: 0.6rem;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.baking-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.baking-time-row strong {
+  color: var(--terracotta);
+}
+
+.baking-track {
+  width: 100%;
+  height: 8px;
+  background-color: var(--parchment-alt);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.baking-fill {
+  height: 100%;
+  background: linear-gradient(to right, #ff9d66, #ff4500);
+  border-radius: 9999px;
+  transition: width 0.5s ease;
+}
+
+.receipt-box {
+  width: 100%;
+  background-color: var(--parchment-alt);
+  border: 1px dashed var(--parchment-border);
+  border-radius: 0.5rem;
+  padding: 0.85rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.rec-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.rec-items-list {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Toast */
+.pizza-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--charcoal-oven);
+  color: #fff9f0;
+  border: 1px solid var(--brass-gold);
+  padding: 0.65rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pizza-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

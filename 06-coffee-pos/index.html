@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Square Register — Coffee &amp; Bakery Touch POS</title>
+  <meta name="description" content="Square Register Point of Sale for specialty coffee and bakeries. Touch-optimized order grid, live receipt ticket, and split tender payments." />
+
+  <!-- Fonts: Square / Inter / Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Square Register Top Header -->
+  <header class="pos-header">
+    <div class="header-container">
+      <div class="pos-brand">
+        <!-- Square Logo Icon -->
+        <svg class="square-logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+          <rect x="2" y="2" width="20" height="20" rx="5" fill="#1a1a1a"/>
+          <rect x="7" y="7" width="10" height="10" rx="2.5" fill="#ffffff"/>
+        </svg>
+        <div>
+          <h1 class="brand-name">Square Register</h1>
+          <span class="register-tag">DOWNTOWN ROASTERY &bull; TERMINAL 01</span>
+        </div>
+      </div>
+
+      <div class="pos-system-info">
+        <div class="dining-toggle" role="radiogroup" aria-label="Dining Mode">
+          <button type="button" class="btn-dining active" id="btnDineIn" data-mode="dinein">DINE-IN</button>
+          <button type="button" class="btn-dining" id="btnTakeaway" data-mode="takeaway">TAKEAWAY</button>
+        </div>
+
+        <div class="clock-badge" id="posClock">14:28:40</div>
+
+        <button type="button" id="btnCustomerLookup" class="btn-header-tool" title="Customer Loyalty Search">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span id="currentCustomerLabel">GUEST</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- POS Main Layout: Touch Menu (Left) + Live Ticket (Right) -->
+  <main class="pos-main">
+
+    <!-- LEFT COLUMN: Product Catalog & Touchpad -->
+    <section class="menu-section">
+      <!-- Category Tabs (Square Style) -->
+      <nav class="category-nav" role="tablist">
+        <button type="button" class="cat-tab active" data-category="espresso">Espresso &amp; Milk</button>
+        <button type="button" class="cat-tab" data-category="filter">Pourover &amp; Batch</button>
+        <button type="button" class="cat-tab" data-category="cold">Cold Brew &amp; Iced</button>
+        <button type="button" class="cat-tab" data-category="bakery">Bakery &amp; Pastry</button>
+        <button type="button" class="cat-tab" data-category="specials">House Specials</button>
+      </nav>
+
+      <!-- Search & Fast Filter Bar -->
+      <div class="menu-search-bar">
+        <input type="text" id="menuSearchInput" placeholder="Search items or scan barcode (e.g. Flat White, Cinnamon Roll)..." />
+        <span class="shortcut-tip">ESC to clear</span>
+      </div>
+
+      <!-- Touch Grid of Products (Square Large Touch Tiles) -->
+      <div class="product-grid" id="productGrid">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: Barista Ticket & Receipt Panel (Square Tape) -->
+    <aside class="ticket-section">
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <div class="ticket-title-row">
+            <h2 class="ticket-title">CURRENT SALE</h2>
+            <span class="ticket-num" id="ticketNumber">#T-408</span>
+          </div>
+          <div class="ticket-meta-row">
+            <span class="dining-badge" id="ticketDiningMode">DINE-IN (TABLE 04)</span>
+            <button type="button" id="btnVoidTicket" class="btn-void-ticket" title="Void and clear ticket">CLEAR</button>
+          </div>
+        </div>
+
+        <!-- Scrollable Ticket Items -->
+        <div class="ticket-items-list" id="ticketItemsList">
+          <div class="ticket-empty" id="ticketEmptyState">
+            <div class="empty-receipt-svg">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1z"/>
+                <line x1="8" y1="6" x2="16" y2="6"/>
+                <line x1="8" y1="10" x2="16" y2="10"/>
+                <line x1="8" y1="14" x2="12" y2="14"/>
+              </svg>
+            </div>
+            <p>No items added yet</p>
+            <small>Tap tiles on the left to add items to the current sale.</small>
+          </div>
+        </div>
+
+        <!-- Ticket Financial Summary -->
+        <div class="ticket-footer">
+          <!-- Loyalty Banner if active -->
+          <div class="loyalty-discount-banner" id="loyaltyBanner" style="display: none;">
+            <span>★ Square Rewards 10% Member Applied</span>
+            <button type="button" class="btn-remove-loyalty" id="btnRemoveLoyalty">&times;</button>
+          </div>
+
+          <div class="summary-line">
+            <span>Subtotal</span>
+            <span id="ticketSubtotal">$0.00</span>
+          </div>
+
+          <div class="summary-line" id="rowLoyaltyDiscount" style="display: none;">
+            <span>Rewards Discount</span>
+            <span id="ticketDiscount" class="text-green">-$0.00</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Sales Tax (8.25%)</span>
+            <span id="ticketTax">$0.00</span>
+          </div>
+
+          <!-- Tip Preset Selector -->
+          <div class="tip-section">
+            <span class="tip-label">TIP:</span>
+            <div class="tip-pills" id="tipPills">
+              <button type="button" class="tip-btn" data-tip="0">No Tip</button>
+              <button type="button" class="tip-btn active" data-tip="15">15%</button>
+              <button type="button" class="tip-btn" data-tip="18">18%</button>
+              <button type="button" class="tip-btn" data-tip="20">20%</button>
+            </div>
+            <span class="tip-amount-val" id="tipAmountVal">$0.00</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-line total-line">
+            <span>TOTAL DUE</span>
+            <strong class="ticket-total-val" id="ticketTotalVal">$0.00</strong>
+          </div>
+
+          <!-- POS Action Buttons (Square Big Blue Charge Button) -->
+          <div class="ticket-actions-grid">
+            <button type="button" id="btnSplitBill" class="btn-ticket-secondary" disabled>
+              SPLIT TENDER
+            </button>
+            <button type="button" id="btnChargeCard" class="btn-ticket-primary" disabled>
+              CHARGE CARD
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- MODAL 1: Beverage Customizer Modal -->
+  <dialog class="pos-modal" id="customizerModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-category-tag" id="custCategoryTag">ESPRESSO &amp; MILK</span>
+          <h2 class="modal-item-title" id="custItemTitle">Oat Flat White</h2>
+        </div>
+        <button type="button" class="modal-close" id="btnCloseCustomizer">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Size / Shots -->
+        <div class="modifier-group">
+          <label class="mod-group-title">SIZE &amp; ESPRESSO SHOTS</label>
+          <div class="mod-pill-row" id="groupSize">
+            <button type="button" class="mod-pill active" data-mod="size" data-val="standard" data-price="0">Regular (Double)</button>
+            <button type="button" class="mod-pill" data-mod="size" data-val="large" data-price="0.75">Large (Triple) +$0.75</button>
+          </div>
+        </div>
+
+        <!-- Milk Type -->
+        <div class="modifier-group">
+          <label class="mod-group-title">MILK / DAIRY OPTION</label>
+          <div class="mod-pill-row" id="groupMilk">
+            <button type="button" class="mod-pill active" data-mod="milk" data-val="whole" data-price="0">Whole Milk</button>
+            <button type="button" class="mod-pill" data-mod="milk" data-val="oat" data-price="0.80">Oat Milk (+ $0.80)</button>
+            <button type="button" class="mod-pill" data-mod="milk" data-val="almond" data-price="0.80">Almond (+ $0.80)</button>
+            <button type="button" class="mod-pill" data-mod="milk" data-val="skim" data-price="0">Skim Milk</button>
+          </div>
+        </div>
+
+        <!-- Temperature -->
+        <div class="modifier-group">
+          <label class="mod-group-title">SERVING TEMPERATURE</label>
+          <div class="mod-pill-row" id="groupTemp">
+            <button type="button" class="mod-pill active" data-mod="temp" data-val="hot">Hot (65°C)</button>
+            <button type="button" class="mod-pill" data-mod="temp" data-val="extra-hot">Extra Hot (75°C)</button>
+            <button type="button" class="mod-pill" data-mod="temp" data-val="iced">Over Ice</button>
+          </div>
+        </div>
+
+        <!-- Syrups / Addons -->
+        <div class="modifier-group">
+          <label class="mod-group-title">SYRUP &amp; SWEETENER</label>
+          <div class="mod-pill-row" id="groupSyrup">
+            <button type="button" class="mod-pill active" data-mod="syrup" data-val="none" data-price="0">None</button>
+            <button type="button" class="mod-pill" data-mod="syrup" data-val="vanilla" data-price="0.60">Madagascar Vanilla (+$0.60)</button>
+            <button type="button" class="mod-pill" data-mod="syrup" data-val="cardamom" data-price="0.75">Nordic Cardamom (+$0.75)</button>
+          </div>
+        </div>
+
+        <!-- Decaf Toggle -->
+        <div class="modifier-group">
+          <label class="checkbox-mod-label">
+            <input type="checkbox" id="checkDecaf" />
+            <span>Swiss Water Decaf (No Upcharge)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btnCancelCustomizer" class="btn-modal-cancel">Cancel</button>
+        <button type="button" id="btnSaveCustomizer" class="btn-modal-confirm">
+          <span>Add to Sale</span>
+          <span id="custModalPrice">$5.50</span>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 2: Split Bill Tender Keypad -->
+  <dialog class="pos-modal" id="splitModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-category-tag">PAYMENT TENDER</span>
+          <h2 class="modal-item-title">Split Check by Guests</h2>
+        </div>
+        <button type="button" class="modal-close" id="btnCloseSplit">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="split-controls-row">
+          <span>Number of paying guests:</span>
+          <div class="split-stepper">
+            <button type="button" id="btnSplitMinus" class="btn-step">&minus;</button>
+            <span id="splitCountDisplay" class="split-count">2</span>
+            <button type="button" id="btnSplitPlus" class="btn-step">&plus;</button>
+          </div>
+        </div>
+
+        <div class="split-shares-card">
+          <div class="split-row">
+            <span>Total check amount:</span>
+            <strong id="splitTotalBill">$0.00</strong>
+          </div>
+          <div class="split-row highlight">
+            <span>Each guest pays:</span>
+            <strong class="text-blue" id="splitPerPersonAmount">$0.00</strong>
+          </div>
+        </div>
+
+        <div class="guest-paid-tracker" id="guestPaidTracker">
+          <!-- Dynamic checkboxes for each guest tender -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btnCancelSplit" class="btn-modal-cancel">Back</button>
+        <button type="button" id="btnCompleteSplit" class="btn-modal-confirm">
+          Finalize Split Payment
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 3: Customer Rewards Phone Lookup -->
+  <dialog class="pos-modal" id="customerModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-category-tag">CUSTOMER REWARDS</span>
+          <h2 class="modal-item-title">Square Loyalty Search</h2>
+        </div>
+        <button type="button" class="modal-close" id="btnCloseCustomerModal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <label for="custPhoneInput" class="cust-label">Enter customer phone number:</label>
+        <input type="text" id="custPhoneInput" placeholder="(555) 019-2834" autocomplete="off" />
+        <div id="custLookupError" class="err-text"></div>
+
+        <div id="foundCustomerCard" class="found-cust-card" style="display: none;">
+          <div class="found-name" id="foundCustName">Freja Lindqvist</div>
+          <div class="found-points" id="foundCustPoints">320 Square Stars (Gold Member &bull; 10% Off)</div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="btnAttachCustomer" class="btn-modal-confirm w-full">
+          Attach Member to Sale
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 4: Thermal Receipt / Order Success Modal -->
+  <dialog class="pos-modal" id="receiptModal">
+    <div class="modal-card modal-receipt">
+      <div class="receipt-tape">
+        <div class="tape-header">
+          <h3>SQUARE REGISTER</h3>
+          <p>DOWNTOWN ROASTERY #01</p>
+          <p id="receiptDate">2026-09-30 14:32</p>
+        </div>
+
+        <div class="tape-divider">--------------------------------</div>
+
+        <div id="receiptItemsContainer" class="tape-items-list"></div>
+
+        <div class="tape-divider">--------------------------------</div>
+
+        <div class="tape-totals">
+          <div class="tape-row">
+            <span>SUBTOTAL:</span>
+            <span id="recSubtotal">$0.00</span>
+          </div>
+          <div class="tape-row" id="recDiscountRow" style="display: none;">
+            <span>REWARDS DISCOUNT:</span>
+            <span id="recDiscount">-$0.00</span>
+          </div>
+          <div class="tape-row">
+            <span>TAX (8.25%):</span>
+            <span id="recTax">$0.00</span>
+          </div>
+          <div class="tape-row">
+            <span>TIP:</span>
+            <span id="recTip">$0.00</span>
+          </div>
+          <div class="tape-row tape-bold">
+            <span>TOTAL PAID:</span>
+            <span id="recTotal">$0.00</span>
+          </div>
+          <div class="tape-row">
+            <span>METHOD:</span>
+            <span>CONTACTLESS CHIP</span>
+          </div>
+        </div>
+
+        <div class="tape-footer">
+          <p>THANK YOU FOR YOUR VISIT!</p>
+          <small>RECEIPT NO: <span id="recOrderNum">#48190</span></small>
+        </div>
+      </div>
+
+      <div class="receipt-actions">
+        <button type="button" id="btnPrintReceipt" class="btn-ticket-secondary">Print Paper Tape</button>
+        <button type="button" id="btnNextSale" class="btn-ticket-primary">New Sale</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Notification Toast -->
+  <div class="pos-toast" id="posToast" aria-live="polite"></div>
+
+  <!-- Terminal Logic Script -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,838 @@
+/* ==========================================================================
+   AMC THEATRES — 1:1 IMAX & Dolby Cinema Reservation Stylesheet
+   Design Language: Cinematic Charcoal (#0f1012), AMC Signature Red (#d32f2f, #b71c1c),
+   Curved Laser Screen Glow, Luxury Motorized Recliners, Mobile Pass Modal
+   ========================================================================== */
+
+:root {
+  --amc-red: #d32f2f;
+  --amc-red-dark: #b71c1c;
+  --amc-red-glow: rgba(211, 47, 47, 0.4);
+  --amc-gold: #f59e0b;
+  
+  --bg-cinema: #0f1012;
+  --bg-surface: #181a1e;
+  --bg-card: #20232a;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  
+  --border-subtle: #2d3139;
+  
+  --seat-standard: #333842;
+  --seat-vip: #851414;
+  --seat-accessible: #0284c7;
+  --seat-selected: #f59e0b;
+  --seat-reserved: #1e2025;
+  
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-cinema);
+  color: var(--text-main);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   AMC Header
+   ========================================================================== */
+.cinema-header {
+  background-color: rgba(15, 16, 18, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.85rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.amc-logo-badge {
+  background-color: var(--amc-red);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 1.15rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  letter-spacing: -0.05em;
+  text-transform: lowercase;
+}
+
+.amc-logo-badge.sm {
+  font-size: 0.85rem;
+  padding: 0.15rem 0.45rem;
+}
+
+.brand-name {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.brand-tag {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.auditorium-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.status-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.btn-ghost {
+  background: none;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  padding: 0.4rem 0.85rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  color: #ffffff;
+  border-color: #64748b;
+}
+
+/* ==========================================================================
+   Movie Banner
+   ========================================================================== */
+.movie-banner {
+  background: linear-gradient(to bottom, rgba(15, 16, 18, 0.4) 0%, var(--bg-cinema) 100%),
+              radial-gradient(circle at 50% 20%, rgba(211, 47, 47, 0.25) 0%, transparent 70%);
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.banner-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.movie-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.badge-gold {
+  background: var(--amc-red);
+  color: #ffffff;
+}
+
+.badge-format {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.badge-rating {
+  border: 1px solid #64748b;
+  color: #cbd5e1;
+}
+
+.meta-item {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.movie-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.35rem;
+}
+
+.movie-tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 700px;
+}
+
+/* ==========================================================================
+   Screening Controls: Dates & Times
+   ========================================================================== */
+.screening-controls {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.75rem 2rem;
+}
+
+.controls-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.selector-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.group-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.dates-pills, .times-pills {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.date-pill, .time-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.15s;
+}
+
+.date-pill:hover, .time-pill:hover {
+  border-color: #64748b;
+  color: #ffffff;
+}
+
+.date-pill.active, .time-pill.active {
+  background-color: var(--amc-red);
+  color: #ffffff;
+  border-color: var(--amc-red);
+}
+
+.day-name, .time-fmt {
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+.day-num, .time-val {
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   Auditorium Workspace & Seating Map
+   ========================================================================== */
+.booking-layout {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 5rem;
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.auditorium-panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Curved Screen */
+.screen-stage {
+  width: 100%;
+  max-width: 650px;
+  position: relative;
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.curved-screen-glow {
+  position: absolute;
+  top: -15px;
+  width: 90%;
+  height: 25px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  filter: blur(8px);
+}
+
+.screen-curve-arc {
+  width: 100%;
+  height: 30px;
+  border-top: 4px solid #ffffff;
+  border-radius: 50% 50% 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6px;
+  box-shadow: 0 -4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.screen-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+/* Legend */
+.seat-legend-bar {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+  background: var(--bg-card);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid var(--border-subtle);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.swatch-available { background-color: var(--seat-standard); }
+.swatch-vip { background-color: var(--seat-vip); }
+.swatch-accessible { background-color: var(--seat-accessible); }
+.swatch-selected { background-color: var(--seat-selected); }
+.swatch-occupied { background-color: var(--seat-reserved); }
+
+/* Seat Grid */
+.seating-grid-container {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.seating-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.row-label {
+  width: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.cinema-seat {
+  width: 30px;
+  height: 28px;
+  border-radius: 5px 5px 2px 2px;
+  background-color: var(--seat-standard);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.cinema-seat:hover:not(.occupied) {
+  transform: scale(1.15);
+  border-color: #ffffff;
+}
+
+.cinema-seat.vip {
+  background-color: var(--seat-vip);
+  color: #ffffff;
+}
+
+.cinema-seat.accessible {
+  background-color: var(--seat-accessible);
+  color: #ffffff;
+}
+
+.cinema-seat.selected {
+  background-color: var(--seat-selected);
+  color: #000000;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.cinema-seat.occupied {
+  background-color: var(--seat-reserved);
+  color: #475569;
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.seat-aisle {
+  width: 20px;
+}
+
+.alert-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(2, 132, 199, 0.15);
+  border: 1px solid rgba(2, 132, 199, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  color: #38bdf8;
+}
+
+.smart-tools-bar {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-tool-cinema {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  padding: 0.45rem 1rem;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-tool-cinema:hover {
+  color: #ffffff;
+  border-color: #64748b;
+}
+
+/* ==========================================================================
+   Order Panel & Concessions
+   ========================================================================== */
+.order-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.timer-card {
+  background: rgba(211, 47, 47, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.timer-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--amc-red);
+  margin-bottom: 0.35rem;
+}
+
+.timer-track {
+  height: 4px;
+  background: rgba(211, 47, 47, 0.2);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.timer-progress {
+  height: 100%;
+  background-color: var(--amc-red);
+  transition: width 1s linear;
+}
+
+.order-section-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.85rem;
+  padding: 1.25rem;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.85rem;
+}
+
+.card-head h3 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.selected-seats-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.seat-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.empty-seats-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.concessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.concession-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.85rem;
+}
+
+.concession-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background-color: rgba(211, 47, 47, 0.15);
+  color: #ff6b6b;
+  border: 1px solid rgba(211, 47, 47, 0.35);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.alert-icon-svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+}
+
+.concession-info {
+  flex: 1;
+  margin-left: 0.75rem;
+}
+
+.item-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: block;
+}
+
+.item-price {
+  font-size: 0.75rem;
+  color: var(--amc-red);
+  font-weight: 800;
+}
+
+.btn-concession-toggle {
+  background: none;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  padding: 0.3rem 0.75rem;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-concession-toggle.active {
+  background-color: var(--amc-red);
+  border-color: var(--amc-red);
+}
+
+.promo-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.promo-input-row input {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  font-family: var(--font-main);
+  font-size: 0.8rem;
+  color: #ffffff;
+}
+
+.btn-secondary-cinema {
+  background: var(--bg-card);
+  color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.5rem;
+  padding: 0.55rem 1rem;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pricing-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.85rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.price-divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin: 0.35rem 0;
+}
+
+.total-row {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.text-gold {
+  color: var(--amc-gold);
+}
+
+.btn-amc-checkout {
+  margin-top: 0.75rem;
+  background-color: var(--amc-red);
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  padding: 1rem;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-amc-checkout:hover:not(:disabled) {
+  background-color: var(--amc-red-dark);
+}
+
+.btn-amc-checkout:disabled {
+  background-color: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Modals */
+.cinema-modal {
+  margin: auto;
+  border: none;
+  background: transparent;
+  padding: 1.5rem;
+  max-width: 440px;
+  width: 100%;
+}
+
+.cinema-modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+}
+
+.modal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.ticket-pass-card {
+  border-top: 5px solid var(--amc-red);
+}
+
+.pass-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.pass-movie {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+
+.pass-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.pass-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.pass-val {
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.full-row {
+  grid-column: span 2;
+}
+
+.pass-barcode-wrapper {
+  text-align: center;
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #000000;
+  margin-bottom: 1.25rem;
+}
+
+.barcode-graphic {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  letter-spacing: 0.15em;
+}
+
+.barcode-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Toast */
+.cinema-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--amc-red);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  box-shadow: 0 10px 25px var(--amc-red-glow);
+  z-index: 2000;
+  opacity: 0;
+  transition: all 0.25s;
+  pointer-events: none;
+}
+
+.cinema-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

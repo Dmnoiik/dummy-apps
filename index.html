@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applications Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --surface: #121826;
+      --surface-border: #1f293d;
+      --surface-hover: #172033;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-glow: rgba(79, 70, 229, 0.25);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    .header {
+      padding: 3.5rem 2rem 2.5rem;
+      text-align: center;
+      background: radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.18) 0%, transparent 70%);
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(79, 70, 229, 0.12);
+      border: 1px solid rgba(79, 70, 229, 0.3);
+      color: #a5b4fc;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 1rem;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card:hover {
+      background: var(--surface-hover);
+      transform: translateY(-3px);
+      border-color: rgba(79, 70, 229, 0.4);
+      box-shadow: 0 12px 28px -8px var(--accent-glow);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #818cf8;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      width: 100%;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      border-radius: 0.6rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--surface-border);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="badge">10 Applications</div>
+    <h1>Applications Suite</h1>
+    <p class="subtitle">Interactive web applications and prototype collection.</p>
+  </header>
+
+  <main class="main">
+    <div class="grid">
+
+      <!-- 01 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#01</span>
+        </div>
+        <h2 class="card-title">User Registration</h2>
+        <a href="./01-register-form/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 02 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#02</span>
+        </div>
+        <h2 class="card-title">Pixel Jack 21</h2>
+        <a href="./02-pixel-blackjack/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 03 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#03</span>
+        </div>
+        <h2 class="card-title">AMC Theatres</h2>
+        <a href="./03-cinema-booking/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 04 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#04</span>
+        </div>
+        <h2 class="card-title">Pizzeria Napoletana</h2>
+        <a href="./04-pizza-crafter/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 05 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#05</span>
+        </div>
+        <h2 class="card-title">Nike SNKRS</h2>
+        <a href="./05-sneaker-drop/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 06 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#06</span>
+        </div>
+        <h2 class="card-title">Square Register</h2>
+        <a href="./06-coffee-pos/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 07 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#07</span>
+        </div>
+        <h2 class="card-title">Barnes &amp; Noble</h2>
+        <a href="./07-bookstore-cart/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 08 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#08</span>
+        </div>
+        <h2 class="card-title">Binance Pro</h2>
+        <a href="./08-crypto-trader/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 09 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#09</span>
+        </div>
+        <h2 class="card-title">Wise</h2>
+        <a href="./09-currency-converter/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+      <!-- 10 -->
+      <article class="card">
+        <div class="card-top">
+          <span class="card-num">#10</span>
+        </div>
+        <h2 class="card-title">Figma Pixel Studio</h2>
+        <a href="./10-pixel-canvas/index.html" class="btn">Open Application &rarr;</a>
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Applications Suite &bull; 10 Interactive Prototypes</p>
+  </footer>
+
+</body>
+</html>

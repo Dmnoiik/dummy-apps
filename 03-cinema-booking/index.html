@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMC Theatres — Reserve IMAX, Dolby Cinema &amp; Prime Recliner Seats</title>
+  <meta name="description" content="Reserve premium IMAX and Dolby Cinema recliner seats at AMC Theatres. Interactive seat map, concessions, and instant mobile ticketing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Top AMC Navigation Header -->
+  <header class="cinema-header">
+    <div class="header-container">
+      <div class="brand-logo">
+        <!-- AMC Red Logo Mark -->
+        <div class="amc-logo-badge">amc</div>
+        <div class="brand-text">
+          <span class="brand-name">THEATRES</span>
+          <span class="brand-tag">IMAX &bull; DOLBY CINEMA AT AMC</span>
+        </div>
+      </div>
+      
+      <div class="auditorium-badge">
+        <span class="status-pulse"></span>
+        <span>Auditorium 04 &bull; IMAX with Laser 4K</span>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnRulesModal" class="btn-ghost sm" aria-label="View Cinema Policies">AMC Stubs &amp; Pricing</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Movie Feature Banner -->
+  <section class="movie-banner" aria-label="Current Movie Screening">
+    <div class="banner-content">
+      <div class="movie-meta">
+        <span class="badge badge-gold">AMC EXCLUSIVE</span>
+        <span class="badge badge-format">IMAX WITH LASER</span>
+        <span class="badge badge-rating">PG-13</span>
+        <span class="meta-item"><span class="meta-label">RUNTIME:</span> 166 MIN</span>
+        <span class="meta-item"><span class="meta-label">AUDIO:</span> DOLBY ATMOS 12.1</span>
+      </div>
+      <h1 class="movie-title">DUNE: PART TWO</h1>
+      <p class="movie-tagline">Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.</p>
+    </div>
+  </section>
+
+  <!-- Screening Controls: Date & Showtime Selectors -->
+  <nav class="screening-controls" aria-label="Select Date and Showtime">
+    <div class="controls-container">
+      <!-- Date Picker Pills -->
+      <div class="selector-group">
+        <span class="group-label">DATE</span>
+        <div class="dates-pills" id="datePills" role="radiogroup" aria-label="Screening Date">
+          <button class="date-pill active" data-date="2026-10-01" role="radio" aria-checked="true">
+            <span class="day-name">TODAY</span>
+            <span class="day-num">OCT 01</span>
+          </button>
+          <button class="date-pill" data-date="2026-10-02" role="radio" aria-checked="false">
+            <span class="day-name">TOMORROW</span>
+            <span class="day-num">OCT 02</span>
+          </button>
+          <button class="date-pill" data-date="2026-10-03" role="radio" aria-checked="false">
+            <span class="day-name">SATURDAY</span>
+            <span class="day-num">OCT 03</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Showtime Picker Pills -->
+      <div class="selector-group">
+        <span class="group-label">SHOWTIME</span>
+        <div class="times-pills" id="timePills" role="radiogroup" aria-label="Screening Showtime">
+          <button class="time-pill active" data-time="13:30" role="radio" aria-checked="true">
+            <span class="time-val">1:30 PM</span>
+            <span class="time-fmt">IMAX</span>
+          </button>
+          <button class="time-pill" data-time="17:00" role="radio" aria-checked="false">
+            <span class="time-val">5:00 PM</span>
+            <span class="time-fmt">DOLBY</span>
+          </button>
+          <button class="time-pill" data-time="20:30" role="radio" aria-checked="false">
+            <span class="time-val">8:30 PM</span>
+            <span class="time-fmt">IMAX 70MM</span>
+          </button>
+          <button class="time-pill" data-time="23:45" role="radio" aria-checked="false">
+            <span class="time-val">11:45 PM</span>
+            <span class="time-fmt">LATE NIGHT</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Booking Workspace: Seating Map + Booking Sidebar -->
+  <main class="booking-layout">
+    
+    <!-- LEFT: Interactive Cinema Screen & Seating Map -->
+    <section class="auditorium-panel" aria-label="Auditorium Seating Plan">
+      
+      <!-- The Massive Curved IMAX Screen Ribbon -->
+      <div class="screen-stage">
+        <div class="curved-screen-glow"></div>
+        <div class="screen-curve-arc">
+          <span class="screen-label">AMC IMAX &bull; CURVED LASER SCREEN</span>
+        </div>
+      </div>
+
+      <!-- Seat Legend Bar -->
+      <div class="seat-legend-bar" aria-label="Seat Types Legend">
+        <div class="legend-item">
+          <span class="legend-swatch swatch-available"></span>
+          <span class="legend-text">Standard Recliner ($14.50)</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-vip"></span>
+          <span class="legend-text">Signature Recliner ($24.00)</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-accessible"></span>
+          <span class="legend-text">Wheelchair ($12.00)</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-selected"></span>
+          <span class="legend-text">Selected</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-occupied"></span>
+          <span class="legend-text">Reserved</span>
+        </div>
+      </div>
+
+      <!-- The Dynamic Seat Grid Container -->
+      <div class="seating-grid-container" id="seatingGridContainer">
+        <div class="seating-grid" id="seatingGrid" role="grid" aria-label="Cinema Seat Matrix">
+          <!-- Populated dynamically by script.js -->
+        </div>
+      </div>
+
+      <!-- Accessibility Warning Banner -->
+      <div class="alert-box accessible-warning hidden" id="accessibleAlert">
+        <span class="alert-icon-svg">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="4" r="2"/>
+            <path d="M19 13v-2c-1.54.02-3.09-.75-4.07-1.83l-1.29-1.43c-.17-.19-.38-.34-.61-.45-.71-.34-1.55-.2-2.12.33L8.6 9.87c-.37.35-.6.85-.6 1.37V19h2v-6.5l1.6-1.5 2 2.5V19h2v-5c0-.55-.45-1-1-1h-1"/>
+          </svg>
+        </span>
+        <div class="alert-text">
+          <strong>COMPANION SEAT POLICY NOTICE:</strong>
+          <span>Wheelchair companion seating is reserved for guests with mobility impairments and their companions.</span>
+        </div>
+      </div>
+
+      <!-- Smart Seating Assistance Buttons -->
+      <div class="smart-tools-bar">
+        <button id="btnFindBestSeats" class="btn-tool-cinema" title="Auto-find center best acoustic seats">
+          Auto-Find Center Pair
+        </button>
+        <button id="btnClearSeats" class="btn-tool-cinema" title="Deselect all chosen seats">
+          Clear Selection
+        </button>
+      </div>
+
+    </section>
+
+    <!-- RIGHT: Booking Summary, Concessions & Checkout -->
+    <aside class="order-panel" aria-label="Order Summary and Concessions">
+      
+      <!-- 5-Minute Reservation Hold Timer Banner -->
+      <div class="timer-card" id="timerBanner">
+        <div class="timer-header">
+          <span class="timer-title">RESERVATION HOLD</span>
+          <span class="timer-clock" id="holdTimerDisplay">05:00</span>
+        </div>
+        <div class="timer-track">
+          <div class="timer-progress" id="holdTimerProgress" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Selected Seats Capsule List -->
+      <div class="order-section-card">
+        <div class="card-head">
+          <h3>SELECTED SEATS</h3>
+          <span class="badge" id="seatCountBadge">0 SEATS</span>
+        </div>
+        <div class="selected-seats-pills" id="selectedSeatsPills">
+          <span class="empty-seats-hint">Click seats in the auditorium map to begin reservation.</span>
+        </div>
+      </div>
+
+      <!-- Concessions & Snack Combos -->
+      <div class="order-section-card">
+        <div class="card-head">
+          <h3>AMC CONCESSIONS &amp; SNACKS</h3>
+        </div>
+        <div class="concessions-list">
+          <div class="concession-item">
+            <div class="concession-badge">POPCORN</div>
+            <div class="concession-info">
+              <span class="item-title">AMC Classic Butter Popcorn</span>
+              <span class="item-price">+$6.50</span>
+            </div>
+            <button class="btn-concession-toggle" data-concession-id="popcorn" data-price="6.50" aria-label="Add Popcorn">Add</button>
+          </div>
+          <div class="concession-item">
+            <div class="concession-badge">BEVERAGE</div>
+            <div class="concession-info">
+              <span class="item-title">Coca-Cola Freestyle Large</span>
+              <span class="item-price">+$5.00</span>
+            </div>
+            <button class="btn-concession-toggle" data-concession-id="soda" data-price="5.00" aria-label="Add Soda">Add</button>
+          </div>
+          <div class="concession-item">
+            <div class="concession-badge">WARM COMBO</div>
+            <div class="concession-info">
+              <span class="item-title">Gourmet Nachos &amp; Warm Cheese</span>
+              <span class="item-price">+$8.00</span>
+            </div>
+            <button class="btn-concession-toggle" data-concession-id="nachos" data-price="8.00" aria-label="Add Nachos">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promo Code Section -->
+      <div class="order-section-card">
+        <div class="promo-input-row">
+          <input type="text" id="promoInput" placeholder="Enter AMC Stubs code (e.g. VIPLUMIERE)" aria-label="Promo Code">
+          <button id="btnApplyPromo" class="btn-secondary-cinema">Apply</button>
+        </div>
+        <div id="promoFeedback" class="promo-feedback"></div>
+      </div>
+
+      <!-- Pricing Summary Breakdown -->
+      <div class="pricing-card">
+        <div class="price-row">
+          <span>Tickets Subtotal</span>
+          <span id="priceTicketsSubtotal">$0.00</span>
+        </div>
+        <div class="price-row" id="rowConcessions" style="display: none;">
+          <span>Concessions</span>
+          <span id="priceConcessions">$0.00</span>
+        </div>
+        <div class="price-row" id="rowPromoDiscount" style="display: none;">
+          <span>AMC Stubs Discount</span>
+          <span id="pricePromoDiscount" class="text-gold">-$0.00</span>
+        </div>
+        <div class="price-row">
+          <span>Processing Fee ($1.50 flat)</span>
+          <span id="priceBookingFee">$0.00</span>
+        </div>
+        <div class="price-row">
+          <span>State &amp; Local Tax</span>
+          <span id="priceTax">$0.00</span>
+        </div>
+        <div class="price-divider"></div>
+        <div class="price-row total-row">
+          <span>Total Order Value</span>
+          <span id="priceGrandTotal" class="total-amount">$0.00</span>
+        </div>
+
+        <button id="btnProceedCheckout" class="btn-amc-checkout" disabled>
+          CONTINUE TO PAYMENT &gt;
+        </button>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- MODAL: Mobile Ticket Pass & Order Confirmation -->
+  <dialog class="cinema-modal" id="ticketPassModal">
+    <div class="modal-card ticket-pass-card">
+      <div class="pass-header">
+        <div class="amc-logo-badge sm">amc</div>
+        <span class="pass-type">OFFICIAL MOBILE TICKET</span>
+      </div>
+      <div class="pass-body">
+        <h2 class="pass-movie">DUNE: PART TWO</h2>
+        <div class="pass-details-grid">
+          <div>
+            <span class="pass-label">AUDITORIUM</span>
+            <span class="pass-val">Hall 04 &bull; IMAX</span>
+          </div>
+          <div>
+            <span class="pass-label">DATE &amp; TIME</span>
+            <span class="pass-val" id="passScreeningDateTime">OCT 01 &bull; 13:30</span>
+          </div>
+          <div class="full-row">
+            <span class="pass-label">SEATS CONFIRMED</span>
+            <span class="pass-val text-gold" id="passConfirmedSeats">E12, E13</span>
+          </div>
+          <div class="full-row">
+            <span class="pass-label">TOTAL PAID</span>
+            <span class="pass-val" id="passTotalPaid">$38.50</span>
+          </div>
+        </div>
+
+        <div class="pass-barcode-wrapper">
+          <div class="barcode-graphic" id="passBarcode">||| | |||| | ||||| || | |||| || |||</div>
+          <span class="barcode-number" id="passBookingRef">REF: #AMC-849103</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnDismissPass" class="btn-amc-checkout w-full">Done</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL: Cinema Policies & Pricing Guidelines -->
+  <dialog class="cinema-modal" id="policiesModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>AMC THEATRES POLICIES</h2>
+        <button id="btnClosePolicies" class="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body policy-text">
+        <h4>Seat Allocation Tiers</h4>
+        <ul>
+          <li><strong>Standard Recliners:</strong> Ergonomic motorized leather seating ($14.50).</li>
+          <li><strong>Signature Recliners:</strong> Center optimal acoustic positioning ($24.00).</li>
+          <li><strong>Accessible Companion:</strong> Flat-floor accessibility companion spots ($12.00).</li>
+        </ul>
+        <h4>Reservation Hold Time</h4>
+        <p>Selected seats are held for exactly 5 minutes while you finalize snacks and payment.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btnAcceptPolicies" class="btn-amc-checkout">Understood</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Notification Toast -->
+  <div class="cinema-toast" id="cinemaToast" aria-live="polite"></div>
+
+  <!-- Cinema Engine Logic -->
+  <script src="script.js"></script>
+</body>
+</html>

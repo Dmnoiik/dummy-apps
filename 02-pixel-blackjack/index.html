@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixel Jack 21 &bull; 8-Bit Casino Blackjack</title>
+  <meta name="description" content="A fully functional, retro 8-bit pixel art Blackjack game built with HTML, CSS, and Vanilla JavaScript. Features realistic casino rules, splits, double down, chip betting, and 8-bit audio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="crt-enabled">
+  <!-- CRT Scanline & Vignette Overlay -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- Arcade Cabinet Container -->
+  <main class="arcade-cabinet" id="gameApp">
+    
+    <!-- Top Arcade Header / Marquee -->
+    <header class="arcade-header">
+      <div class="marquee-brand">
+        <span class="marquee-lamp left"></span>
+        <h1 class="game-title">
+          <span class="title-accent">★</span> PIXEL JACK <span class="title-num">21</span> <span class="title-accent">★</span>
+        </h1>
+        <span class="marquee-lamp right"></span>
+      </div>
+
+      <!-- Quick Action Utilities -->
+      <nav class="header-controls" aria-label="Game settings">
+        <button id="btnSoundToggle" class="pixel-btn sm-btn" title="Toggle 8-Bit Sound" aria-label="Toggle Sound">
+          <span class="btn-icon" id="soundIcon">🔊</span>
+          <span class="btn-text">SFX: ON</span>
+        </button>
+        <button id="btnCrtToggle" class="pixel-btn sm-btn" title="Toggle CRT Scanlines" aria-label="Toggle CRT Scanlines">
+          <span class="btn-icon">📺</span>
+          <span class="btn-text">CRT: ON</span>
+        </button>
+        <button id="btnStatsOpen" class="pixel-btn sm-btn" title="View Statistics" aria-label="View Statistics">
+          <span class="btn-icon">📊</span>
+          <span class="btn-text">STATS</span>
+        </button>
+        <button id="btnRulesOpen" class="pixel-btn sm-btn" title="Blackjack Rules & Payouts" aria-label="Blackjack Rules">
+          <span class="btn-icon">📜</span>
+          <span class="btn-text">RULES</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Top Status Bar: Bankroll, Current Bet, Shoe Deck Count -->
+    <section class="dashboard-bar" aria-label="Player Bankroll and Table Status">
+      <div class="dash-block bankroll-block">
+        <span class="dash-label">CREDITS</span>
+        <span class="dash-value" id="bankrollDisplay">$1,000</span>
+      </div>
+      <div class="dash-block bet-block">
+        <span class="dash-label">TOTAL BET</span>
+        <span class="dash-value" id="currentBetDisplay">$0</span>
+      </div>
+      <div class="dash-block shoe-block">
+        <span class="dash-label">SHOE (6 DECKS)</span>
+        <span class="dash-value" id="shoeCardsDisplay">312 CARDS</span>
+      </div>
+    </section>
+
+    <!-- Main Casino Green Felt Table -->
+    <section class="table-felt" id="blackjackTable" aria-label="Blackjack Table">
+      <div class="felt-inner-border">
+        
+        <!-- Table Felt Decorative Watermark / Rules Imprint -->
+        <div class="felt-rules-imprint">
+          <div class="imprint-main">BLACKJACK PAYS 3 TO 2</div>
+          <div class="imprint-sub">DEALER MUST STAND ON ALL 17s &bull; INSURANCE PAYS 2 TO 1</div>
+        </div>
+
+        <!-- DEALER AREA -->
+        <div class="table-zone dealer-zone" id="dealerZone" aria-label="Dealer Hand">
+          <div class="zone-header">
+            <div class="character-tag">
+              <span class="char-avatar dealer-avatar" aria-hidden="true">🤵</span>
+              <span class="char-name">DEALER</span>
+            </div>
+            <div class="score-badge" id="dealerScoreBadge" aria-live="polite">
+              <span class="score-label">VALUE:</span>
+              <span class="score-val" id="dealerScoreVal">--</span>
+            </div>
+          </div>
+
+          <!-- Dealer Cards Container -->
+          <div class="cards-rack" id="dealerCards" role="region" aria-label="Dealer's cards">
+            <!-- Cards dynamically rendered here -->
+          </div>
+        </div>
+
+        <!-- CENTER FELT: Game Alerts & Betting Circle -->
+        <div class="center-stage">
+          <!-- Animated Pixel Notification Banner -->
+          <div class="announcement-banner" id="announcementBanner" aria-live="assertive" role="status">
+            <div class="banner-inner" id="bannerText">PLACE YOUR BET TO DEAL</div>
+          </div>
+
+          <!-- Betting Circle with Interactive Drop Spot -->
+          <div class="betting-circle-area" id="bettingArea">
+            <div class="bet-spot" id="betSpot" role="button" tabindex="0" aria-label="Betting spot: click to clear bet, or click chips below to add">
+              <div class="spot-ring">
+                <span class="spot-label">BET HERE</span>
+                <div class="chips-stack-visual" id="tableChipsStack" aria-hidden="true">
+                  <!-- Visual stacked chip layers rendered dynamically -->
+                </div>
+              </div>
+            </div>
+            <div class="bet-quick-actions" id="betQuickActions">
+              <button id="btnClearBet" class="pixel-btn btn-xs btn-danger" title="Clear current bet">CLEAR</button>
+              <button id="btnDoubleBet" class="pixel-btn btn-xs btn-warn" title="Double current bet">2X BET</button>
+              <button id="btnAllIn" class="pixel-btn btn-xs btn-purple" title="Bet all available credits">ALL IN</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PLAYER AREA (Supports Single Hand & Split Hands) -->
+        <div class="table-zone player-zone" id="playerZone" aria-label="Player Hand">
+          <div class="zone-header">
+            <div class="character-tag">
+              <span class="char-avatar player-avatar" aria-hidden="true">🕹️</span>
+              <span class="char-name">PLAYER</span>
+            </div>
+            <div class="score-badge" id="playerScoreBadge" aria-live="polite">
+              <span class="score-label">VALUE:</span>
+              <span class="score-val" id="playerScoreVal">--</span>
+            </div>
+          </div>
+
+          <!-- Multi-Hand Container for Split Support -->
+          <div class="player-hands-wrapper" id="playerHandsContainer">
+            <!-- Hand 0 (Default primary hand) -->
+            <div class="player-hand active-hand" id="hand-0" data-hand-index="0">
+              <div class="hand-meta">
+                <span class="hand-indicator">▲ ACTIVE</span>
+                <span class="hand-bet-tag" id="handBet-0">$0</span>
+              </div>
+              <div class="cards-rack" id="playerCards-0" role="region" aria-label="Player cards hand 1">
+                <!-- Cards dynamically rendered here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BOTTOM ARCADE CONSOLE: Chips & Action Controls -->
+    <footer class="console-tray" aria-label="Player Controls and Betting Chips">
+      
+      <!-- Phase 1: Chip Selector Rack (Betting Phase) -->
+      <section class="tray-section betting-tray" id="bettingControls" aria-label="Chips Rack">
+        <div class="tray-title">SELECT CHIPS</div>
+        <div class="chips-rack" role="toolbar" aria-label="Poker Chip Denominations">
+          <button class="pixel-chip chip-5" data-chip="5" aria-label="Add $5 chip">
+            <span class="chip-dash"></span>
+            <span class="chip-val">$5</span>
+            <span class="chip-dash"></span>
+          </button>
+          <button class="pixel-chip chip-25" data-chip="25" aria-label="Add $25 chip">
+            <span class="chip-dash"></span>
+            <span class="chip-val">$25</span>
+            <span class="chip-dash"></span>
+          </button>
+          <button class="pixel-chip chip-50" data-chip-value="50" aria-label="Add $50 chip">
+            <span class="chip-dash"></span>
+            <span class="chip-val">$50</span>
+            <span class="chip-dash"></span>
+          </button>
+          <button class="pixel-chip chip-100" data-chip="100" aria-label="Add $100 chip">
+            <span class="chip-dash"></span>
+            <span class="chip-val">$100</span>
+            <span class="chip-dash"></span>
+          </button>
+          <button class="pixel-chip chip-500" data-chip="500" aria-label="Add $500 chip">
+            <span class="chip-dash"></span>
+            <span class="chip-val">$500</span>
+            <span class="chip-dash"></span>
+          </button>
+        </div>
+
+        <div class="deal-action-wrapper">
+          <button id="btnDeal" class="pixel-btn btn-action btn-gold" disabled>
+            <span class="btn-main-text">DEAL HAND</span>
+            <span class="btn-sub-text">[SPACE / ENTER]</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Phase 2: Action Controls (Playing Phase: Hit, Stand, Double, Split, Surrender) -->
+      <section class="tray-section action-tray hidden" id="actionControls" aria-label="Game Play Actions">
+        <div class="action-buttons-grid">
+          <button id="btnHit" class="pixel-btn btn-action btn-green">
+            <span class="btn-shortcut">H</span>
+            <span class="btn-main-text">HIT</span>
+          </button>
+          <button id="btnStand" class="pixel-btn btn-action btn-red">
+            <span class="btn-shortcut">S</span>
+            <span class="btn-main-text">STAND</span>
+          </button>
+          <button id="btnDouble" class="pixel-btn btn-action btn-yellow">
+            <span class="btn-shortcut">D</span>
+            <span class="btn-main-text">DOUBLE</span>
+          </button>
+          <button id="btnSplit" class="pixel-btn btn-action btn-cyan" disabled>
+            <span class="btn-shortcut">P</span>
+            <span class="btn-main-text">SPLIT</span>
+          </button>
+          <button id="btnSurrender" class="pixel-btn btn-action btn-purple">
+            <span class="btn-shortcut">R</span>
+            <span class="btn-main-text">SURRENDER</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Phase 3: Round Finished Controls (New Round, Rebet) -->
+      <section class="tray-section resolve-tray hidden" id="resolveControls" aria-label="Round Complete Controls">
+        <div class="resolve-buttons-row">
+          <button id="btnRebetAndDeal" class="pixel-btn btn-action btn-gold">
+            <span class="btn-shortcut">R</span>
+            <span class="btn-main-text">REBET &amp; DEAL</span>
+          </button>
+          <button id="btnNewRound" class="pixel-btn btn-action btn-green">
+            <span class="btn-shortcut">N</span>
+            <span class="btn-main-text">NEW BET</span>
+          </button>
+        </div>
+      </section>
+
+    </footer>
+
+  </main>
+
+  <!-- MODAL: Statistics & History -->
+  <dialog class="pixel-modal" id="statsModal" aria-labelledby="statsTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="statsTitle" class="modal-title">CASINO STATISTICS</h2>
+        <button class="pixel-btn btn-xs btn-close" id="btnCloseStats" aria-label="Close Statistics">&times;</button>
+      </div>
+      <div class="modal-body stats-grid">
+        <div class="stat-card">
+          <span class="stat-num" id="statHandsPlayed">0</span>
+          <span class="stat-label">HANDS PLAYED</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num win-text" id="statHandsWon">0</span>
+          <span class="stat-label">WINS</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num loss-text" id="statHandsLost">0</span>
+          <span class="stat-label">LOSSES</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num push-text" id="statHandsPushed">0</span>
+          <span class="stat-label">PUSHES</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num bj-text" id="statBlackjacks">0</span>
+          <span class="stat-label">BLACKJACKS (3:2)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="statWinRate">0%</span>
+          <span class="stat-label">WIN RATE</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num gold-text" id="statBiggestWin">$0</span>
+          <span class="stat-label">BIGGEST WIN</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num" id="statWinStreak">0</span>
+          <span class="stat-label">CURRENT STREAK</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnResetBankroll" class="pixel-btn btn-danger btn-sm">RESET CREDITS ($1,000)</button>
+        <button id="btnResetStats" class="pixel-btn btn-warn btn-sm">CLEAR STATS</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL: Rules & Payouts -->
+  <dialog class="pixel-modal" id="rulesModal" aria-labelledby="rulesTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="rulesTitle" class="modal-title">HOUSE RULES &amp; PAYOUTS</h2>
+        <button class="pixel-btn btn-xs btn-close" id="btnCloseRules" aria-label="Close Rules">&times;</button>
+      </div>
+      <div class="modal-body rules-content">
+        <ul class="pixel-list">
+          <li><strong>BLACKJACK:</strong> Natural 21 on deal pays <span class="gold-text">3 to 2</span>.</li>
+          <li><strong>DEALER RULES:</strong> Dealer must hit on soft 16 or lower, and <span class="gold-text">STANDS on all 17s</span>.</li>
+          <li><strong>DOUBLE DOWN:</strong> Double your initial bet and receive exactly 1 card, then stand.</li>
+          <li><strong>SPLIT PAIRS:</strong> Split any matching value pair into two hands with matching bet.</li>
+          <li><strong>SURRENDER:</strong> Fold initial 2-card hand to recover <span class="gold-text">50%</span> of your bet.</li>
+          <li><strong>SHOE:</strong> 6 standard decks (312 cards) with auto-shuffle when 75% depleted.</li>
+        </ul>
+        <div class="keyboard-legend">
+          <div class="legend-title">KEYBOARD SHORTCUTS</div>
+          <div class="keys-grid">
+            <span><kbd>SPACE</kbd> / <kbd>ENTER</kbd> Deal</span>
+            <span><kbd>H</kbd> Hit</span>
+            <span><kbd>S</kbd> Stand</span>
+            <span><kbd>D</kbd> Double</span>
+            <span><kbd>P</kbd> Split</span>
+            <span><kbd>R</kbd> Surrender / Rebet</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnGotRules" class="pixel-btn btn-gold btn-sm">UNDERSTOOD!</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Notification Toast for Sound / Save events -->
+  <div class="pixel-toast" id="pixelToast" aria-live="polite"></div>
+
+  <!-- Audio Synthesizer and Game Logic Scripts -->
+  <script src="audio.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

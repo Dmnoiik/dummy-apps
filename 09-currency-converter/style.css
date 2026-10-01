@@ -1,0 +1,767 @@
+/* ==========================================================================
+   WISE (formerly TransferWise) — 1:1 Global Remittance Stylesheet
+   Design Language: Clean White Canvas, Wise Lime (#9fe870), Deep Forest (#163300),
+   Subtle Gray Input Troughs (#f2f4f7), Soft Borders (#e2e8f0), Pill CTAs
+   ========================================================================== */
+
+:root {
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-input: #f2f4f7;
+  --bg-input-hover: #e9ecef;
+  
+  --wise-forest: #163300;
+  --wise-lime: #9fe870;
+  --wise-lime-hover: #8de05a;
+  
+  --text-primary: #163300;
+  --text-secondary: #5d7079;
+  --text-muted: #82929a;
+  
+  --border-light: #e2e8f0;
+  --border-focus: #163300;
+  
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 10px 30px -5px rgba(22, 51, 0, 0.06);
+  --radius-card: 1.5rem;
+  --radius-input: 1rem;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Wise Header
+   ========================================================================== */
+.fx-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-box {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.wise-top-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.wise-link {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: color 0.15s;
+}
+
+.wise-link:hover, .wise-link.active {
+  color: var(--text-primary);
+}
+
+.rate-lock-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(159, 232, 112, 0.2);
+  border: 1px solid rgba(22, 51, 0, 0.12);
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  color: var(--wise-forest);
+  font-weight: 600;
+}
+
+.pulsing-beacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--wise-forest);
+  animation: pulseBeacon 2s infinite;
+}
+
+@keyframes pulseBeacon {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.8); opacity: 0.4; }
+}
+
+/* ==========================================================================
+   Main Layout & Wise Calculator Card
+   ========================================================================== */
+.fx-layout {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .fx-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calculator-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-card);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.75rem;
+}
+
+.card-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.card-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-top: 0.2rem;
+}
+
+.btn-tool-fx {
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: 9999px;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-tool-fx:hover {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+}
+
+/* Currency Input Boxes (The Wise Trough) */
+.currency-input-box {
+  background-color: var(--bg-input);
+  border: 2px solid transparent;
+  border-radius: var(--radius-input);
+  padding: 1rem 1.25rem;
+  transition: all 0.15s ease;
+}
+
+.currency-input-box:focus-within {
+  background-color: #ffffff;
+  border-color: var(--wise-forest);
+  box-shadow: 0 0 0 4px rgba(22, 51, 0, 0.08);
+}
+
+.input-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.fee-savings-tag {
+  color: #008751;
+  font-weight: 800;
+}
+
+.input-field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-field-row input {
+  flex: 1;
+  background: none;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  outline: none;
+  min-width: 0;
+}
+
+.currency-select-wrapper {
+  margin-left: 1rem;
+}
+
+.currency-select {
+  background-color: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 9999px;
+  padding: 0.65rem 1rem;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  outline: none;
+}
+
+.currency-select:focus {
+  border-color: var(--wise-forest);
+}
+
+/* ==========================================================================
+   Wise Vertical Flow Connector (Dotted Tree)
+   ========================================================================== */
+.fee-breakdown-card {
+  display: flex;
+  position: relative;
+  padding: 1.5rem 0 1.5rem 1.25rem;
+  margin-left: 1.5rem;
+}
+
+.tree-bullet-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1.25rem;
+  width: 24px;
+}
+
+.bullet-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.bullet-line {
+  width: 2px;
+  flex: 1;
+  min-height: 20px;
+  background: repeating-linear-gradient(to bottom, #cbd5e1 0, #cbd5e1 4px, transparent 4px, transparent 8px);
+}
+
+.fee-rows-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.15rem;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.fee-val {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.total-fee-row {
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.rate-ticker-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  background-color: rgba(159, 232, 112, 0.25);
+  border: 1px solid rgba(22, 51, 0, 0.1);
+  padding: 0.4rem 0.75rem;
+  border-radius: 9999px;
+  width: fit-content;
+  color: var(--wise-forest);
+  margin-top: 0.25rem;
+}
+
+.rate-status-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: #ffffff;
+  padding: 0.15rem 0.45rem;
+  border-radius: 9999px;
+}
+
+.btn-swap-currency {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  color: var(--wise-forest);
+}
+
+.btn-swap-currency:hover {
+  transform: translateY(-50%) rotate(180deg);
+  background-color: var(--bg-input);
+}
+
+/* Speed / Payment Method Selector */
+.speed-selector-group {
+  margin: 1.75rem 0;
+}
+
+.speed-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.speed-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.speed-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 0.85rem;
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.speed-card input {
+  position: absolute;
+  opacity: 0;
+}
+
+.speed-card:hover {
+  border-color: var(--wise-forest);
+}
+
+.speed-card.active, .speed-card:has(input:checked) {
+  border-color: var(--wise-forest);
+  background-color: rgba(159, 232, 112, 0.08);
+  box-shadow: 0 0 0 2px var(--wise-forest);
+}
+
+.speed-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.speed-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.speed-time {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin: 0.15rem 0;
+}
+
+.speed-cost {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #008751;
+}
+
+/* Wise Big Lime Button */
+.btn-primary-fx {
+  width: 100%;
+  background-color: var(--wise-lime);
+  color: var(--wise-forest);
+  border: none;
+  border-radius: 9999px;
+  padding: 1.15rem 1.75rem;
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s;
+  box-shadow: 0 4px 15px rgba(159, 232, 112, 0.4);
+}
+
+.btn-primary-fx:hover {
+  background-color: var(--wise-lime-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary-fx:active {
+  transform: translateY(0);
+}
+
+.btn-amount-preview {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Sidebar: Sparkline & Comparison
+   ========================================================================== */
+.market-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.side-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.side-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.side-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0.2rem 0 1rem;
+}
+
+.sparkline-wrapper {
+  background: var(--bg-input);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.sparkline-svg {
+  width: 100%;
+  height: 80px;
+}
+
+.sparkline-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.comp-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.comp-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.comp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  background-color: var(--bg-input);
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.comp-row.highlight-aura {
+  background-color: rgba(159, 232, 112, 0.2);
+  border: 1px solid rgba(22, 51, 0, 0.15);
+}
+
+.text-green {
+  color: var(--wise-forest);
+}
+
+/* ==========================================================================
+   Modals
+   ========================================================================== */
+.fx-modal {
+  margin: auto;
+  border: none;
+  background: transparent;
+  padding: 1.5rem;
+  max-width: 560px;
+  width: 100%;
+}
+
+.fx-modal::backdrop {
+  background: rgba(22, 51, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-card);
+  padding: 2.25rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.modal-pill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--wise-forest);
+  background: var(--wise-lime);
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.modal-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin-top: 0.35rem;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 0.35rem;
+}
+
+.form-group input {
+  background: var(--bg-input);
+  border: 1px solid var(--border-light);
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.form-group input:focus {
+  background: #ffffff;
+  border-color: var(--wise-forest);
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.err-text {
+  color: #e03a3e;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.transfer-summary-box {
+  background: var(--bg-input);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin: 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.green-text {
+  color: #008751;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-secondary {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border-light);
+  border-radius: 9999px;
+  padding: 0.85rem;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-submit-wire {
+  flex: 2;
+  justify-content: center;
+}
+
+/* Confirm modal */
+.modal-confirm {
+  text-align: center;
+}
+
+.confirm-icon-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--wise-lime);
+  color: var(--wise-forest);
+  font-size: 1.75rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+
+.confirm-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 0.4rem;
+}
+
+.confirm-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.receipt-card {
+  background: var(--bg-input);
+  border-radius: 0.85rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.rec-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* Toast */
+.fx-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--wise-forest);
+  color: #ffffff;
+  padding: 0.85rem 1.75rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+  opacity: 0;
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.fx-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antica Pizzeria Napoletana — Forno a Legna dal 1889</title>
+  <meta name="description" content="Autentica pizza artigianale napoletana cotta nel forno a legna a 485°C. Ingredienti D.O.P., impasto a lievitazione naturale e composizione interattiva." />
+  
+  <!-- Google Fonts: Cormorant Garamond (Italian Heritage Serif) & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;700;800&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Italian Pizzeria Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-block">
+        <div class="italian-crest">
+          <svg viewBox="0 0 40 40" width="36" height="36" fill="none" stroke="currentColor">
+            <circle cx="20" cy="20" r="18" stroke="#bfa15f" stroke-width="1.5"/>
+            <path d="M12 28 C14 20 20 12 28 12 C24 20 18 28 12 28 Z" fill="#bfa15f" opacity="0.3"/>
+            <path d="M20 8 L20 32 M8 20 L32 20" stroke="#bfa15f" stroke-width="0.75" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Antica Pizzeria Napoletana</h1>
+          <p class="brand-tagline">FORNO A LEGNA &bull; VIA DEI TRIBUNALI, NAPOLI</p>
+        </div>
+      </div>
+
+      <div class="header-meta">
+        <div class="oven-status-badge">
+          <span class="pulsing-ember"></span>
+          <span>FORNO A LEGNA: <strong>485°C ATTIVO</strong></span>
+        </div>
+
+        <button id="btnOpenCart" class="cart-trigger-btn" aria-label="Apri il Vassoio Ordini">
+          <span class="cart-label">IL VASSOIO</span>
+          <span id="cartCountBadge" class="cart-badge">0</span>
+          <span id="cartTotalHeader" class="cart-header-price">$0.00</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Italian Heritage Navigation Bar -->
+  <nav class="sub-nav-bar" aria-label="Pizzeria Sections">
+    <div class="sub-nav-inner">
+      <span class="heritage-text">TRADIZIONE ARTIGIANALE &bull; LIEVITAZIONE 48 ORE &bull; FARINA TIPO 00</span>
+      <div class="dop-guarantee">
+        <span class="dop-seal">D.O.P.</span>
+        <span>PRODOTTI CAMPANIA CERTIFICATI</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Crafting Workspace -->
+  <main class="builder-layout">
+
+    <!-- Left Column: Wood-Fired Pizza Peel & Interactive Canvas -->
+    <section class="canvas-panel">
+      <div class="canvas-header">
+        <div class="canvas-title-group">
+          <span class="pill-category">BANCO PIZZAIOLO</span>
+          <h2 class="section-title">Composizione sul Tagliere</h2>
+        </div>
+
+        <!-- Half-and-Half Coverage Switcher (Metà e Metà) -->
+        <div class="coverage-selector" role="radiogroup" aria-label="Copertura Condimenti">
+          <button type="button" class="coverage-btn active" data-coverage="whole" id="btnCoverWhole">
+            Intera
+          </button>
+          <button type="button" class="coverage-btn" data-coverage="left" id="btnCoverLeft">
+            Metà Sinistra
+          </button>
+          <button type="button" class="coverage-btn" data-coverage="right" id="btnCoverRight">
+            Metà Destra
+          </button>
+        </div>
+      </div>
+
+      <!-- Wood-Fired Peel Stage -->
+      <div class="pizza-stage-container">
+        <div class="wood-board">
+          <div class="board-handle"></div>
+          
+          <div class="pizza-interactive-wrapper" id="pizzaCanvasWrapper">
+            <!-- Dynamic SVG Pizza Render -->
+            <svg id="pizzaSvg" viewBox="0 0 500 500" class="pizza-svg" aria-label="Visualizzazione Pizza Napoletana">
+              <defs>
+                <radialGradient id="crustGradient" cx="50%" cy="50%" r="50%">
+                  <stop offset="68%" stop-color="#df9a57" />
+                  <stop offset="84%" stop-color="#be6f2d" />
+                  <stop offset="94%" stop-color="#884213" />
+                  <stop offset="100%" stop-color="#3d1c08" />
+                </radialGradient>
+
+                <radialGradient id="sauceTomato" cx="45%" cy="45%" r="50%">
+                  <stop offset="0%" stop-color="#af2317" />
+                  <stop offset="85%" stop-color="#8a170f" />
+                  <stop offset="100%" stop-color="#600f09" />
+                </radialGradient>
+
+                <radialGradient id="sauceBianca" cx="48%" cy="48%" r="50%">
+                  <stop offset="0%" stop-color="#fdfcf7" />
+                  <stop offset="85%" stop-color="#f3ebd0" />
+                  <stop offset="100%" stop-color="#d8c594" />
+                </radialGradient>
+
+                <radialGradient id="saucePesto" cx="48%" cy="48%" r="50%">
+                  <stop offset="0%" stop-color="#4d7829" />
+                  <stop offset="85%" stop-color="#3b5e1e" />
+                  <stop offset="100%" stop-color="#243c11" />
+                </radialGradient>
+
+                <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
+                  <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#1a140f" flood-opacity="0.3" />
+                </filter>
+              </defs>
+
+              <!-- Drop shadow circle -->
+              <circle cx="250" cy="250" r="235" fill="none" filter="url(#shadowFilter)" />
+
+              <!-- Cornicione Crust Blisters -->
+              <g id="layerCrust">
+                <circle id="crustCircle" cx="250" cy="250" r="230" fill="url(#crustGradient)" />
+                <ellipse cx="140" cy="45" rx="14" ry="7" fill="#260f04" opacity="0.85" transform="rotate(-15 140 45)" />
+                <ellipse cx="370" cy="65" rx="18" ry="9" fill="#1f0b02" opacity="0.9" transform="rotate(25 370 65)" />
+                <ellipse cx="445" cy="260" rx="12" ry="6" fill="#2c1105" opacity="0.8" transform="rotate(80 445 260)" />
+                <ellipse cx="230" cy="465" rx="20" ry="8" fill="#240c03" opacity="0.9" />
+                <ellipse cx="65" cy="340" rx="15" ry="7" fill="#290e04" opacity="0.85" transform="rotate(-40 65 340)" />
+              </g>
+
+              <!-- San Marzano Tomato Sauce Layer -->
+              <g id="layerSauce">
+                <circle id="sauceCircle" cx="250" cy="250" r="195" fill="url(#sauceTomato)" />
+              </g>
+
+              <!-- Fior di Latte di Agerola Cheese Patches -->
+              <g id="layerCheese">
+                <path d="M 160 210 Q 185 180 230 200 Q 280 220 270 260 Q 240 290 190 270 Q 150 240 160 210 Z" fill="#fffdf5" opacity="0.92" />
+                <path d="M 270 140 Q 320 120 340 160 Q 360 210 310 220 Q 260 200 270 140 Z" fill="#fffef7" opacity="0.94" />
+                <path d="M 120 290 Q 160 270 180 320 Q 190 370 140 380 Q 90 350 120 290 Z" fill="#faf4e1" opacity="0.9" />
+                <path d="M 280 300 Q 330 290 360 330 Q 370 380 320 390 Q 270 370 280 300 Z" fill="#fffdf5" opacity="0.92" />
+                <path d="M 190 130 Q 230 110 250 140 Q 240 180 200 170 Q 170 150 190 130 Z" fill="#fcf6dc" opacity="0.9" />
+              </g>
+
+              <!-- Toppings Layer (Populated Dynamically by JS) -->
+              <g id="layerToppings"></g>
+
+              <!-- Interactive Half-and-Half Click Zones -->
+              <g id="layerInteractiveZones" opacity="0">
+                <path id="zoneLeft" d="M 250 45 A 205 205 0 0 0 250 455 Z" fill="#ffffff" cursor="pointer" />
+                <path id="zoneRight" d="M 250 45 A 205 205 0 0 1 250 455 Z" fill="#ffffff" cursor="pointer" />
+              </g>
+            </svg>
+
+            <!-- Guide Divider Line -->
+            <div id="pizzaDivider" class="pizza-divider"></div>
+          </div>
+        </div>
+
+        <!-- Workbench Controls -->
+        <div class="canvas-actions">
+          <button type="button" class="btn-tool" id="btnResetPizza" title="Ripristina il banco">
+            Ripristina
+          </button>
+          <button type="button" class="btn-tool" id="btnChefSpecial" title="Creazione del Maestro Pizzaiolo">
+            Speciale del Pizzaiolo
+          </button>
+          <button type="button" class="btn-tool" id="btnToggleSlices" title="Mostra taglio a spicchi">
+            Linee di Taglio (8 Spicchi)
+          </button>
+        </div>
+
+        <!-- Valori Nutrizionali Autentici -->
+        <div class="nutrition-pill-bar">
+          <div class="nutri-item">
+            <span class="nutri-label">CALORIE STIMATE</span>
+            <strong class="nutri-val" id="valCalories">920 kcal</strong>
+          </div>
+          <div class="nutri-divider"></div>
+          <div class="nutri-item">
+            <span class="nutri-label">PROTEINE</span>
+            <strong class="nutri-val" id="valProtein">38g</strong>
+          </div>
+          <div class="nutri-divider"></div>
+          <div class="nutri-item">
+            <span class="nutri-label">CARBOIDRATI</span>
+            <strong class="nutri-val" id="valCarbs">112g</strong>
+          </div>
+          <div class="nutri-divider"></div>
+          <div class="nutri-item">
+            <span class="nutri-label">GRASSI</span>
+            <strong class="nutri-val" id="valFat">34g</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Step-by-Step Artisanal Customizer -->
+    <aside class="customizer-panel">
+
+      <!-- Passaggio 1: Dimensione & Impasto -->
+      <section class="config-card">
+        <div class="config-header">
+          <span class="step-num-badge">I</span>
+          <div>
+            <h3 class="config-title">Dimensione &amp; Tipo di Impasto</h3>
+            <span class="config-sub">Farina biologica macinata a pietra tipo 00</span>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <label class="group-label">DIAMETRO DELLA PIZZA:</label>
+          <div class="size-pills-row" id="sizePillsGroup">
+            <button type="button" class="size-pill" data-size="personal">
+              <span class="size-title">Personale (10")</span>
+              <span class="size-desc">4 Spicchi &bull; $13.50</span>
+            </button>
+            <button type="button" class="size-pill active" data-size="classic">
+              <span class="size-title">Classico (12")</span>
+              <span class="size-desc">6 Spicchi &bull; $16.50</span>
+            </button>
+            <button type="button" class="size-pill" data-size="familiare">
+              <span class="size-title">Familiare (16")</span>
+              <span class="size-desc">8 Spicchi &bull; $21.50</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <label for="crustSelect" class="group-label">VARIETÀ DI IMPASTO:</label>
+          <select id="crustSelect" class="italian-select">
+            <option value="woodfired" selected>Cornicione Napoletano Tradizionale (Forno a Legna)</option>
+            <option value="crisp">Romana Bassa &amp; Croccante</option>
+            <option value="truffle">Cornicione Ripieno di Ricotta di Bufala &amp; Tartufo (+$3.50)</option>
+            <option value="glutenfree">Impasto Senza Glutine Artigianale (+$2.50)</option>
+          </select>
+          <div id="gfAllergyNotice" class="gf-alert hidden">
+            <span>Avviso: Lavorato in ambiente con farina di grano tenero.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Passaggio 2: Base & Formaggio -->
+      <section class="config-card">
+        <div class="config-header">
+          <span class="step-num-badge">II</span>
+          <div>
+            <h3 class="config-title">La Base &amp; Fior di Latte</h3>
+            <span class="config-sub">Pomodoro San Marzano dell'Agro Sarnese D.O.P.</span>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="option-group">
+            <label for="sauceSelect" class="group-label">SALSA / BASE:</label>
+            <select id="sauceSelect" class="italian-select">
+              <option value="tomato" selected>Pomodoro San Marzano D.O.P.</option>
+              <option value="bianca">Base Bianca all'Olio &amp; Aglio</option>
+              <option value="pesto">Pesto di Basilico Genovese D.O.P. (+$1.00)</option>
+            </select>
+          </div>
+
+          <div class="option-group">
+            <label for="cheeseSelect" class="group-label">FORMAGGIO:</label>
+            <select id="cheeseSelect" class="italian-select">
+              <option value="normal" selected>Fior di Latte di Agerola (Normale)</option>
+              <option value="extra">Doppia Mozzarella di Bufala (+$2.00)</option>
+              <option value="vegan">Fior di Latte Vegetale (+$1.50)</option>
+              <option value="none">Senza Formaggio (Marinara Style)</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Passaggio 3: Condimenti della Dispensa -->
+      <section class="config-card">
+        <div class="config-header">
+          <span class="step-num-badge">III</span>
+          <div>
+            <h3 class="config-title">Dispensa dei Condimenti Artigianali</h3>
+            <span class="config-sub">Seleziona fino a 8 ingredienti freschi</span>
+          </div>
+          <span class="toppings-count-tag" id="toppingsCounter">0 / 8 CONDIMENTI</span>
+        </div>
+
+        <!-- Pantry Category Tabs -->
+        <div class="pantry-tabs-bar" role="tablist">
+          <button type="button" class="tab-btn active" data-filter="all">Tutti</button>
+          <button type="button" class="tab-btn" data-filter="meat">Salumi &amp; Carni</button>
+          <button type="button" class="tab-btn" data-filter="veggie">Verdure &amp; Erbe</button>
+          <button type="button" class="tab-btn" data-filter="finish">Finitura al Tavolo</button>
+        </div>
+
+        <!-- Dynamic Toppings Grid -->
+        <div class="toppings-catalog-grid" id="toppingsGrid">
+          <!-- Populated dynamically by script.js -->
+        </div>
+      </section>
+
+      <!-- Step 4: Summary & Add to Tray -->
+      <section class="config-card active-summary-card">
+        <div class="summary-top-row">
+          <div>
+            <h4 class="summary-name" id="summaryPizzaTitle">Pizza Classico (12")</h4>
+            <p class="summary-desc" id="summaryDescription">Cornicione Napoletano, Pomodoro San Marzano, Fior di Latte</p>
+          </div>
+          <strong class="summary-price-badge" id="summaryCurrentPrice">$16.50</strong>
+        </div>
+
+        <button type="button" id="btnAddToOrder" class="btn-inforna">
+          <span>AGGIUNGI AL VASSOIO</span>
+          <span id="btnAddTrayPrice">$16.50</span>
+        </button>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- IL VASSOIO (Order Drawer) -->
+  <div class="cart-overlay hidden" id="cartOverlay"></div>
+  <aside class="cart-drawer hidden" id="cartDrawer" aria-label="Il Vassoio degli Ordini">
+    <div class="cart-drawer-header">
+      <div>
+        <h3 class="drawer-title">IL VOSTRO VASSOIO</h3>
+        <span class="drawer-subtitle" id="drawerItemCount">0 pizze ordinate</span>
+      </div>
+      <button type="button" class="btn-close-drawer" id="btnCloseCart" aria-label="Chiudi il vassoio">&times;</button>
+    </div>
+
+    <!-- Items List -->
+    <div class="cart-items-wrapper" id="drawerItemsList">
+      <!-- Populated dynamically by script.js -->
+    </div>
+
+    <div class="empty-tray-state" id="emptyTrayMessage">
+      <div class="empty-crest-svg">
+        <svg viewBox="0 0 48 48" width="44" height="44" fill="none" stroke="currentColor">
+          <circle cx="24" cy="24" r="20" stroke="#bfa15f" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <path d="M24 14 C18 20 18 28 24 34 C30 28 30 20 24 14 Z" stroke="#884213" stroke-width="1.5" fill="#df9a57" fill-opacity="0.2"/>
+        </svg>
+      </div>
+      <h4>Il vassoio è vuoto</h4>
+      <p>Componete la vostra pizza artigianale sul tagliere e aggiungetela all'ordine.</p>
+    </div>
+
+    <!-- Promo Voucher -->
+    <div class="cart-promo-box">
+      <label for="promoInput" class="promo-label">CODICE PROMOZIONALE</label>
+      <div class="promo-input-row">
+        <input type="text" id="promoInput" placeholder="Es. VESUVIO10" autocomplete="off" />
+        <button type="button" id="btnApplyPromo" class="btn-apply-promo">Applica</button>
+      </div>
+      <div id="promoFeedback" class="promo-feedback-msg"></div>
+    </div>
+
+    <!-- Financial Footer -->
+    <div class="cart-summary-footer">
+      <div class="summary-line">
+        <span>Subtotale Pizze</span>
+        <span id="priceTraySubtotal">$0.00</span>
+      </div>
+
+      <div class="summary-line discount-line hidden" id="linePromoDiscount">
+        <span>Sconto Promozione</span>
+        <span id="pricePromoDiscount">-$0.00</span>
+      </div>
+
+      <div class="summary-line">
+        <span>Consegna Domicilio (<span id="deliveryTag">Gratis oltre $30</span>)</span>
+        <span id="priceDelivery">$4.99</span>
+      </div>
+
+      <div class="summary-line">
+        <span>Imposte Locali (8.25%)</span>
+        <span id="priceTax">$0.00</span>
+      </div>
+
+      <div class="summary-line total-line">
+        <span>Totale Ordine</span>
+        <span id="priceGrandTotal">$0.00</span>
+      </div>
+
+      <button type="button" id="btnProceedCheckout" class="btn-proceed-checkout" disabled>
+        PROCEDI ALL'ORDINE &gt;
+      </button>
+    </div>
+  </aside>
+
+  <!-- CHECKOUT MODAL -->
+  <dialog class="italian-modal" id="checkoutModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">CONSEGNA A DOMICILIO</span>
+          <h3 class="modal-title">Dati per la Consegna</h3>
+        </div>
+        <button type="button" class="btn-modal-close" id="btnCloseCheckoutModal">&times;</button>
+      </div>
+
+      <form id="checkoutForm" class="modal-form" novalidate>
+        <div class="form-row-2">
+          <div class="field-group">
+            <label for="orderName">Nome &amp; Cognome</label>
+            <input type="text" id="orderName" required placeholder="Giuseppe Esposito" />
+            <div class="field-error" id="errOrderName"></div>
+          </div>
+
+          <div class="field-group">
+            <label for="orderPhone">Numero di Telefono</label>
+            <input type="tel" id="orderPhone" required placeholder="+39 081 294810" />
+            <div class="field-error" id="errOrderPhone"></div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="orderAddress">Indirizzo Completo di Consegna</label>
+          <input type="text" id="orderAddress" required placeholder="Via Toledo 142, Scala B, Interno 4" />
+          <div class="field-error" id="errOrderAddress"></div>
+        </div>
+
+        <div class="checkout-total-recap">
+          <span>Totale da autorizzare:</span>
+          <strong id="modalSummaryTotal">$0.00</strong>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnCancelCheckout" class="btn-modal-cancel">Indietro</button>
+          <button type="submit" class="btn-modal-confirm">Conferma e Inforna</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- SUCCESS MODAL (In Forno) -->
+  <dialog class="italian-modal" id="orderSuccessModal">
+    <div class="modal-card success-card">
+      <div class="success-crest-svg">
+        <svg viewBox="0 0 48 48" width="56" height="56" fill="none">
+          <path d="M24 4 C24 14 14 18 14 28 C14 36 19 44 24 44 C29 44 34 36 34 28 C34 22 28 16 28 10 C28 6 26 4 24 4 Z" fill="url(#ovenFlameGrad)" />
+          <defs>
+            <linearGradient id="ovenFlameGrad" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffea79"/>
+              <stop offset="40%" stop-color="#ff6a00"/>
+              <stop offset="100%" stop-color="#bf2600"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h3 class="success-title">LA PIZZA È IN FORNO!</h3>
+      <p class="success-sub">Il maestro pizzaiolo sta cuocendo la vostra pizza a 485°C.</p>
+
+      <div class="baking-tracker-box">
+        <div class="baking-time-row">
+          <span>Tempo di cottura rimanente:</span>
+          <strong id="bakingCountdown">90 secondi</strong>
+        </div>
+        <div class="baking-track">
+          <div class="baking-fill" id="bakingFill" style="width: 10%;"></div>
+        </div>
+      </div>
+
+      <div class="receipt-box">
+        <div class="rec-row">
+          <span>Ricevuta Ordine:</span>
+          <strong id="successOrderNumber">#NAP-83921</strong>
+        </div>
+        <div id="successRecapDetails" class="rec-items-list"></div>
+      </div>
+
+      <button type="button" id="btnNewOrder" class="btn-modal-confirm w-full">
+        Crea Un'Altra Pizza
+      </button>
+    </div>
+  </dialog>
+
+  <!-- Notification Toast -->
+  <div class="pizza-toast" id="pizzaToast" aria-live="polite"></div>
+
+  <!-- Main Engine Script -->
+  <script src="script.js"></script>
+</body>
+</html>

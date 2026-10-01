@@ -1,0 +1,7 @@
+.agents/
+.DS_Store
+Thumbs.db
+*.log
+GEMINI.md
+QA_BUG_REPORT_KEY.md
+**/QA_BUG_REPORT_KEY.md

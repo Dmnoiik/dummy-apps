@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Figma — Pixel Art Studio &amp; Canvas Editor</title>
+  <meta name="description" content="Professional web-based digital pixel studio featuring multi-layer composition, custom color swatches, flood fill, and high-resolution crisp exports." />
+
+  <!-- Fonts: Inter / Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Figma Top Header Bar -->
+  <header class="studio-header">
+    <div class="header-inner">
+      <div class="studio-brand">
+        <!-- Figma Colorful Logo Icon -->
+        <svg class="figma-logo-svg" viewBox="0 0 38 57" width="22" height="33">
+          <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5z" fill="#1abcfe"/>
+          <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" fill="#0acf83"/>
+          <path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19z" fill="#ff7262"/>
+          <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#f24e1e"/>
+          <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#a259ff"/>
+        </svg>
+        <div class="file-name-group">
+          <span class="file-title">Pixel Art Component / Draft</span>
+          <span class="file-crumb">In Drafts &bull; Edited just now</span>
+        </div>
+      </div>
+
+      <!-- Quick Canvas Settings (Grid Resolution & Zoom) -->
+      <div class="studio-top-controls">
+        <div class="res-switcher" role="radiogroup" aria-label="Canvas Grid Resolution">
+          <button type="button" class="res-btn active" data-res="16">16 &times; 16</button>
+          <button type="button" class="res-btn" data-res="32">32 &times; 32</button>
+          <button type="button" class="res-btn" data-res="64">64 &times; 64</button>
+        </div>
+
+        <div class="history-actions">
+          <button type="button" id="btnUndo" class="btn-tool-header" title="Undo (Ctrl+Z)">↶</button>
+          <button type="button" id="btnRedo" class="btn-tool-header" title="Redo (Ctrl+Y)">↷</button>
+        </div>
+
+        <button type="button" id="btnExportModal" class="btn-export-primary">
+          <span>Export...</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Three-Column Studio Workspace -->
+  <main class="studio-workspace">
+
+    <!-- LEFT COLUMN: Figma Layers Panel & Tools -->
+    <aside class="sidebar-tools">
+      <!-- Toolbar Dock -->
+      <div class="dock-panel">
+        <span class="dock-title">TOOLS</span>
+        <div class="tools-grid" role="toolbar" aria-label="Drawing Tools">
+          <button type="button" class="tool-btn active" data-tool="pen" title="Pixel Pen (P)">
+            <span class="tool-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                <path d="M2 2l7.586 7.586"/>
+                <circle cx="11" cy="11" r="2"/>
+              </svg>
+            </span>
+            <span class="tool-label">Pen</span>
+          </button>
+          <button type="button" class="tool-btn" data-tool="eraser" title="Eraser (E)">
+            <span class="tool-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 11L12 18l-6-6 7-7 6 6z"/>
+                <path d="M18 13l-4 4"/>
+              </svg>
+            </span>
+            <span class="tool-label">Eraser</span>
+          </button>
+          <button type="button" class="tool-btn" data-tool="fill" title="Bucket Flood Fill (B)">
+            <span class="tool-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 11l-8-8-8.5 8.5a2.12 2.12 0 0 0 0 3l5 5a2.12 2.12 0 0 0 3 0L19 11z"/>
+                <path d="M5 2l5 5"/>
+              </svg>
+            </span>
+            <span class="tool-label">Fill</span>
+          </button>
+          <button type="button" class="tool-btn" data-tool="dropper" title="Color Eyedropper (I)">
+            <span class="tool-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2l4 4-10 10H4v-4L14 2z"/>
+                <line x1="16" y1="4" x2="20" y2="8"/>
+              </svg>
+            </span>
+            <span class="tool-label">Picker</span>
+          </button>
+          <button type="button" class="tool-btn" data-tool="line" title="Line Tool (L)">
+            <span class="tool-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="19" x2="19" y2="5"/>
+              </svg>
+            </span>
+            <span class="tool-label">Line</span>
+          </button>
+          <button type="button" class="tool-btn" data-tool="rect" title="Rectangle Tool (R)">
+            <span class="tool-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              </svg>
+            </span>
+            <span class="tool-label">Box</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Figma Layers Tree -->
+      <div class="dock-panel">
+        <div class="dock-header-split">
+          <span class="dock-title">LAYERS</span>
+          <button type="button" id="btnAddLayer" class="btn-add-layer" title="Add New Layer">+ Layer</button>
+        </div>
+
+        <!-- Dynamic Layer List -->
+        <div class="layers-list" id="layersList">
+          <!-- Injected dynamically by script.js -->
+        </div>
+
+        <!-- Layer Opacity Slider -->
+        <div class="layer-opacity-box">
+          <div class="opacity-head">
+            <label for="layerOpacityRange">OPACITY</label>
+            <strong id="opacityValDisplay">100%</strong>
+          </div>
+          <input type="range" id="layerOpacityRange" min="10" max="100" value="100" class="opacity-slider" />
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN: Interactive Pixel Canvas Viewport -->
+    <section class="canvas-viewport" id="canvasViewport">
+      <div class="canvas-workbench">
+        <div class="canvas-container" id="canvasContainer">
+          <!-- Main Drawing Canvas -->
+          <canvas id="pixelCanvas" width="512" height="512"></canvas>
+          <!-- Grid Overlay Guide -->
+          <div id="gridOverlay" class="grid-overlay"></div>
+        </div>
+
+        <!-- Bottom Workbench Helper Bar -->
+        <div class="workbench-bar">
+          <div class="coord-indicator" id="cursorCoordDisplay">X: 00 | Y: 00</div>
+          <div class="view-toggles">
+            <label class="toggle-label">
+              <input type="checkbox" id="checkShowGrid" checked />
+              <span>Pixel Grid</span>
+            </label>
+            <button type="button" id="btnClearCanvas" class="btn-clear-canvas">Clear Layer</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: Figma Design Inspector -->
+    <aside class="sidebar-layers">
+      <div class="dock-panel">
+        <div class="dock-header-split">
+          <span class="dock-title">FILL / COLOR</span>
+          <select id="paletteSelect" class="palette-select">
+            <option value="cyberpunk" selected>Cyberpunk Neon</option>
+            <option value="pico8">Pico-8 Classic</option>
+            <option value="sunset">Pastel Sunset</option>
+            <option value="monochrome">GameBoy Monochrome</option>
+          </select>
+        </div>
+
+        <!-- Active Color Preview & Hex Input -->
+        <div class="active-color-row">
+          <div class="color-swatch-large" id="activeColorPreview" style="background-color: #8b5cf6;"></div>
+          <div class="color-inputs">
+            <input type="color" id="nativeColorPicker" value="#8b5cf6" class="native-picker" />
+            <input type="text" id="hexColorInput" value="#8b5cf6" maxlength="7" class="hex-input" />
+          </div>
+        </div>
+
+        <!-- Preset Palette Swatches -->
+        <div class="swatches-grid" id="paletteSwatches"></div>
+
+        <!-- Recent Colors History -->
+        <span class="dock-subtitle">RECENT COLORS</span>
+        <div class="recent-swatches" id="recentSwatches"></div>
+      </div>
+
+      <!-- Quick Canvas Actions -->
+      <div class="dock-panel">
+        <span class="dock-title">CANVAS UTILITIES</span>
+        <div class="utilities-list">
+          <button type="button" id="btnTraceSvg" class="btn-util">
+            Trace Vector Contour (SVG)
+          </button>
+          <button type="button" id="btnInvertColors" class="btn-util">
+            Invert Pixel Colors
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- MODAL 1: High-Resolution Export Studio (Figma Export Dialog) -->
+  <dialog class="studio-modal" id="exportModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">FIGMA EXPORT</span>
+          <h2 class="modal-title">Export Canvas Frame</h2>
+        </div>
+        <button type="button" class="modal-close" id="btnCloseExport">&times;</button>
+      </div>
+
+      <div class="modal-body export-body">
+        <div class="export-preview-box">
+          <canvas id="exportPreviewCanvas" width="180" height="180"></canvas>
+        </div>
+
+        <div class="export-options">
+          <label class="mod-label">EXPORT SCALE:</label>
+          <div class="scale-pills" id="scalePills">
+            <button type="button" class="scale-btn active" data-scale="1">1&times; (16px)</button>
+            <button type="button" class="scale-btn" data-scale="4">4&times; (256px)</button>
+            <button type="button" class="scale-btn" data-scale="16">16&times; (1024px)</button>
+          </div>
+
+          <label class="check-row">
+            <input type="checkbox" id="checkCrispExport" checked />
+            <span>Crisp Nearest-Neighbor (Sharp Pixel Art)</span>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-ghost" id="btnCancelExport">Cancel</button>
+          <button type="button" class="btn-export-primary" id="btnDownloadPng">
+            Export PNG
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification -->
+  <div id="studioToast" class="studio-toast" role="alert" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Registration</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <header class="card-header">
+        <div class="badge">App 01 &bull; Baseline</div>
+        <h1>Create an Account</h1>
+        <p class="subtitle">Please fill in your details to create your account.</p>
+      </header>
+
+      <form id="registrationForm" novalidate>
+        <!-- Name Row -->
+        <div class="form-row">
+          <div class="form-group" id="group-firstName">
+            <label for="firstName">First Name <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="e.g. John"
+                autocomplete="given-name"
+                enterkeyhint="next"
+                maxlength="5"
+                required
+              />
+              <span class="status-icon" aria-hidden="true"></span>
+            </div>
+            <p class="error-msg" id="firstName-error" role="alert"></p>
+          </div>
+
+          <div class="form-group" id="group-lastName">
+            <label for="lastName">Last Name <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="e.g. Doe"
+                autocomplete="family-name"
+                enterkeyhint="next"
+                required
+              />
+              <span class="status-icon" aria-hidden="true"></span>
+            </div>
+            <p class="error-msg" id="lastName-error" role="alert"></p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group" id="group-email">
+          <label for="email">Email Address <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="e.g. john"
+              autocomplete="email"
+              enterkeyhint="next"
+              required
+            />
+            <span class="status-icon" aria-hidden="true"></span>
+          </div>
+          <p class="error-msg" id="email-error" role="alert"></p>
+        </div>
+
+        <!-- Age -->
+        <div class="form-group" id="group-age">
+          <label for="age">Age <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input
+              type="number"
+              id="age"
+              name="age"
+              placeholder="e.g. 25"
+              min="13"
+              max="120"
+              inputmode="numeric"
+              enterkeyhint="next"
+              required
+            />
+            <span class="status-icon" aria-hidden="true"></span>
+          </div>
+          <p class="error-msg" id="age-error" role="alert"></p>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group" id="group-password">
+          <label for="password">Password <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="At least 8 characters"
+              autocomplete="new-password"
+              enterkeyhint="done"
+              required
+            />
+            <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+            <span class="status-icon" aria-hidden="true"></span>
+          </div>
+
+          <!-- Password Strength Indicator -->
+          <div class="password-strength-container" id="strengthContainer">
+            <div class="strength-bars">
+              <span class="bar" id="bar-1"></span>
+              <span class="bar" id="bar-2"></span>
+              <span class="bar" id="bar-3"></span>
+              <span class="bar" id="bar-4"></span>
+            </div>
+            <span class="strength-label" id="strengthLabel">Password strength</span>
+          </div>
+
+          <!-- Password requirements checklist -->
+          <ul class="password-requirements" id="passwordRequirements">
+            <li id="req-length" class="req-item">At least 8 characters</li>
+            <li id="req-upper" class="req-item">At least 1 uppercase letter (A-Z)</li>
+            <li id="req-lower" class="req-item">At least 1 lowercase letter (a-z)</li>
+            <li id="req-number" class="req-item">At least 1 number (0-9)</li>
+            <li id="req-special" class="req-item">At least 1 special symbol (!@#$%^&*...)</li>
+          </ul>
+
+          <p class="error-msg" id="password-error" role="alert"></p>
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            <span>Create Account</span>
+          </button>
+          <button type="reset" id="resetBtn" class="btn btn-secondary">
+            <span>Reset</span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Success Notification Modal / Card -->
+      <div id="successModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+          <div class="success-icon-badge">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <h2 id="modalTitle">Registration Successful!</h2>
+          <p>Your account has been validated and registered successfully.</p>
+          <div class="submitted-data" id="submittedSummary"></div>
+          <button type="button" id="closeModalBtn" class="btn btn-primary">Close & Register Another</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('registrationForm');
+      const firstNameInput = document.getElementById('firstName');
+      const lastNameInput = document.getElementById('lastName');
+      const emailInput = document.getElementById('email');
+      const ageInput = document.getElementById('age');
+      const passwordInput = document.getElementById('password');
+      const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+
+      const strengthContainer = document.getElementById('strengthContainer');
+      const strengthLabel = document.getElementById('strengthLabel');
+
+      const reqItems = {
+        length: document.getElementById('req-length'),
+        upper: document.getElementById('req-upper'),
+        lower: document.getElementById('req-lower'),
+        number: document.getElementById('req-number'),
+        special: document.getElementById('req-special'),
+      };
+
+      const successModal = document.getElementById('successModal');
+      const submittedSummary = document.getElementById('submittedSummary');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+
+      const touched = new Set();
+
+      // Unicode-friendly name pattern (supports international characters, spaces, hyphens, apostrophes)
+      const nameRegex = /^\p{L}[\p{L}\s'-]{1,49}$/u;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+      const openEyeSvg = `<svg class="eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>`;
+
+      const closedEyeSvg = `<svg class="eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+      </svg>`;
+
+      function setFieldState(fieldId, isValid, errorMessage = '') {
+        const group = document.getElementById(`group-${fieldId}`);
+        const errorEl = document.getElementById(`${fieldId}-error`);
+        const inputEl = document.getElementById(fieldId);
+
+        if (!group || !errorEl || !inputEl) return;
+
+        group.classList.remove('has-error', 'has-success');
+
+        if (isValid === true) {
+          group.classList.add('has-success');
+          errorEl.textContent = '';
+          inputEl.setAttribute('aria-invalid', 'false');
+        } else if (isValid === false) {
+          group.classList.add('has-error');
+          errorEl.textContent = errorMessage;
+          inputEl.setAttribute('aria-invalid', 'true');
+        } else {
+          errorEl.textContent = '';
+          inputEl.removeAttribute('aria-invalid');
+        }
+      }
+
+      function validateFirstName() {
+        // Issue #2: First name is truncated at 5 characters
+        if (firstNameInput.value.length > 5) {
+          firstNameInput.value = firstNameInput.value.slice(0, 5);
+        }
+        const val = firstNameInput.value.trim();
+        if (!val) {
+          setFieldState('firstName', false, 'First name is required.');
+          return false;
+        }
+        if (val.length < 2) {
+          setFieldState('firstName', false, 'First name must be at least 2 characters.');
+          return false;
+        }
+        if (!nameRegex.test(val)) {
+          setFieldState('firstName', false, 'Please enter a valid first name (letters only).');
+          return false;
+        }
+        setFieldState('firstName', true);
+        return true;
+      }
+
+      function validateLastName() {
+        const val = lastNameInput.value.trim();
+        if (!val) {
+          setFieldState('lastName', false, 'Last name is required.');
+          return false;
+        }
+        if (val.length < 2) {
+          setFieldState('lastName', false, 'Last name must be at least 2 characters.');
+          return false;
+        }
+        if (!nameRegex.test(val)) {
+          setFieldState('lastName', false, 'Please enter a valid last name (letters only).');
+          return false;
+        }
+        setFieldState('lastName', true);
+        return true;
+      }
+
+      function validateEmail() {
+        const val = emailInput.value.trim();
+        if (!val) {
+          setFieldState('email', false, 'Email address is required.');
+          return false;
+        }
+        if (!emailRegex.test(val)) {
+          setFieldState('email', false, 'Please enter a valid email address (e.g. name@domain.com).');
+          return false;
+        }
+        setFieldState('email', true);
+        return true;
+      }
+
+      function validateAge() {
+        const raw = ageInput.value.trim();
+        if (!raw) {
+          setFieldState('age', false, 'Age is required.');
+          return false;
+        }
+        const num = Number(raw);
+        if (!Number.isInteger(num) || isNaN(num)) {
+          setFieldState('age', false, 'Age must be a whole number.');
+          return false;
+        }
+        if (num < 13) {
+          setFieldState('age', false, 'You must be at least 13 years old to register.');
+          return false;
+        }
+        if (num > 120) {
+          setFieldState('age', false, 'Please enter a valid age (13–120).');
+          return false;
+        }
+        setFieldState('age', true);
+        return true;
+      }
+
+      function evaluatePasswordCriteria(val) {
+        return {
+          length: val.length >= 8,
+          upper: /[A-Z]/.test(val),
+          lower: /[a-z]/.test(val),
+          // Issue #5: Giving a number in password does not apply the "at least 1 number" rule
+          number: false,
+          special: /[^A-Za-z0-9]/.test(val),
+        };
+      }
+
+      function updatePasswordStrengthUI(val) {
+        const criteria = evaluatePasswordCriteria(val);
+
+        Object.entries(criteria).forEach(([key, passed]) => {
+          if (reqItems[key]) {
+            reqItems[key].classList.toggle('valid', passed);
+          }
+        });
+
+        // Issue #6: Password strength levels do not reset when the whole password is removed
+        if (!val) {
+          return criteria;
+        }
+
+        const score = Object.values(criteria).filter(Boolean).length;
+        strengthContainer.classList.remove(
+          'strength-weak',
+          'strength-medium',
+          'strength-strong',
+          'strength-very-strong'
+        );
+
+        if (score <= 1) {
+          strengthContainer.classList.add('strength-weak');
+          strengthLabel.textContent = 'Weak password';
+        } else if (score === 2) {
+          strengthContainer.classList.add('strength-medium');
+          strengthLabel.textContent = 'Fair password';
+        } else if (score === 3) {
+          strengthContainer.classList.add('strength-strong');
+          strengthLabel.textContent = 'Good password';
+        } else {
+          strengthContainer.classList.add('strength-very-strong');
+          strengthLabel.textContent = 'Strong password';
+        }
+
+        return criteria;
+      }
+
+      function validatePassword() {
+        const val = passwordInput.value;
+        const criteria = updatePasswordStrengthUI(val);
+
+        if (!val) {
+          setFieldState('password', false, 'Password is required.');
+          return false;
+        }
+
+        const allPassed =
+          criteria.length && criteria.upper && criteria.lower && criteria.special;
+        if (!allPassed) {
+          setFieldState('password', false, 'Please meet all password requirements listed above.');
+          return false;
+        }
+
+        setFieldState('password', true);
+        return true;
+      }
+
+      const validators = {
+        firstName: validateFirstName,
+        lastName: validateLastName,
+        email: validateEmail,
+        age: validateAge,
+        password: validatePassword,
+      };
+
+      [firstNameInput, lastNameInput, emailInput, ageInput, passwordInput].forEach((input) => {
+        input.addEventListener('blur', () => {
+          touched.add(input.id);
+          validators[input.id]();
+        });
+
+        input.addEventListener('input', () => {
+          if (input.id === 'firstName' && firstNameInput.value.length > 5) {
+            firstNameInput.value = firstNameInput.value.slice(0, 5);
+          }
+          if (input.id === 'password') {
+            updatePasswordStrengthUI(input.value);
+          }
+          if (touched.has(input.id)) {
+            validators[input.id]();
+          }
+        });
+      });
+
+      // Issue #4: Password toggle icon is flipped (visible/open-eye icon shown when password is hidden, slashed-eye shown when password is visible)
+      togglePasswordBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        togglePasswordBtn.setAttribute(
+          'aria-label',
+          isPassword ? 'Hide password' : 'Show password'
+        );
+        togglePasswordBtn.innerHTML = isPassword ? closedEyeSvg : openEyeSvg;
+      });
+
+      // Issue #1: Reset clears everything EXCEPT age
+      form.addEventListener('reset', (e) => {
+        e.preventDefault();
+        firstNameInput.value = '';
+        lastNameInput.value = '';
+        emailInput.value = '';
+        passwordInput.value = '';
+
+        ['firstName', 'lastName', 'email', 'password'].forEach((id) => {
+          touched.delete(id);
+          setFieldState(id, null);
+        });
+
+        Object.values(reqItems).forEach((el) => el && el.classList.remove('valid'));
+        strengthContainer.classList.remove(
+          'strength-weak',
+          'strength-medium',
+          'strength-strong',
+          'strength-very-strong'
+        );
+        strengthLabel.textContent = 'Password strength';
+        passwordInput.type = 'password';
+        togglePasswordBtn.innerHTML = openEyeSvg;
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        ['firstName', 'lastName', 'email', 'age', 'password'].forEach((id) => touched.add(id));
+
+        const isFirstValid = validateFirstName();
+        const isLastValid = validateLastName();
+        const isEmailValid = validateEmail();
+        const isAgeValid = validateAge();
+        const isPasswordValid = validatePassword();
+
+        if (isFirstValid && isLastValid && isEmailValid && isAgeValid && isPasswordValid) {
+          submittedSummary.innerHTML = '';
+
+          const fields = [
+            ['First Name', firstNameInput.value.trim()],
+            ['Last Name', lastNameInput.value.trim()],
+            ['Email', emailInput.value.trim()],
+            ['Age', ageInput.value.trim()],
+            ['Password', '•'.repeat(Math.min(passwordInput.value.length, 12))],
+          ];
+
+          fields.forEach(([label, value]) => {
+            const p = document.createElement('p');
+            const strong = document.createElement('strong');
+            strong.textContent = `${label}: `;
+            p.appendChild(strong);
+            p.appendChild(document.createTextNode(value));
+            submittedSummary.appendChild(p);
+          });
+
+          successModal.classList.remove('hidden');
+          closeModalBtn.focus();
+        } else {
+          const firstInvalid = form.querySelector('.has-error input');
+          if (firstInvalid) {
+            firstInvalid.focus();
+          }
+        }
+      });
+
+      closeModalBtn.addEventListener('click', () => {
+        successModal.classList.add('hidden');
+        form.reset();
+        firstNameInput.focus();
+      });
+    });
+  </script>
+</body>
+</html>
