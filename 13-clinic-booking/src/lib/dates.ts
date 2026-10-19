@@ -4,6 +4,8 @@ export const MONTHS = [
 ]
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+export const DAY_MS = 24 * 60 * 60 * 1000
+
 export function startOfDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate())
 }

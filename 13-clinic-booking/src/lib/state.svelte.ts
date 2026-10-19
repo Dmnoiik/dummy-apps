@@ -1,5 +1,5 @@
 import { findDoctor, type Doctor, type Specialty } from './data/doctors'
-import { addMonths, canCancel, dayKey, parseDayKey, withTime } from './dates'
+import { DAY_MS, addMonths, canCancel, dayKey, parseDayKey, withTime } from './dates'
 
 export interface Patient {
   fullName: string
@@ -37,19 +37,12 @@ export function slotKey(doctorId: string, day: string, time: string): string {
   return `${doctorId}|${day}|${time}`
 }
 
-function localKey(d: Date): string {
-  const month = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${d.getFullYear()}-${month}-${day}`
-}
-
 function seedAppointments(now: Date): Appointment[] {
-  const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
   return [
     {
       id: 'appt-seed-1',
       doctorId: 'nowak',
-      day: localKey(tomorrow),
+      day: dayKey(new Date(now.getTime() + DAY_MS)),
       time: '08:00',
       patient: {
         fullName: 'Jan Kowalski',
