@@ -126,13 +126,13 @@ As a learner, I want to finish a quiz and see my result so that I know how I did
 
 **Expected result:**
 - The confirmation dialog says you have answered 7 of 10 questions.
-- The result screen shows the score as a percentage and a "Passed" or "Not passed" label, with the note that the pass mark is 70%.
+- The result screen shows 70% and the label "Passed", with the note that the pass mark is 70%.
 - "Review your answers" lists all 10 questions: questions 1 to 7 are marked "Correct" and questions 8 to 10 are marked "Incorrect" with "Your answer: No answer".
 - "Retake" and "Back to catalog" buttons are available.
 
 ## US-07: Review my answers after a shuffled quiz
 
-As a learner, I want the questions in random order and a review that matches what I answered so that I can learn from my mistakes.
+As a learner, I want the questions in a random order so that I don't just memorise the sequence, and then go through the review to learn from my mistakes.
 
 **Preconditions:** Demo data reset.
 
