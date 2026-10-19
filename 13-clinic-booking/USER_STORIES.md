@@ -130,9 +130,9 @@ As a patient, I want to move my visit to a later day so that it fits my schedule
 - The confirmation says "Appointment rescheduled".
 - "My appointments" still lists a single visit, now on the Thursday you chose at 11:00, and the old time is gone.
 
-## US-08: Register a young patient
+## US-08: Book a first visit as a student
 
-As a young patient born in 2003, I want to register for a visit so that I can see a doctor.
+As a university student, I want to book my first visit at the clinic so that I can get a check-up.
 
 **Preconditions:** Demo data reset.
 
@@ -140,17 +140,18 @@ As a young patient born in 2003, I want to register for a visit so that I can se
 1. Click "Pediatrics", then click "Choose Dr. Marek Zając".
 2. In the calendar, click the number of a Monday next week.
 3. Click "09:00".
-4. Enter "Zofia Maj" as "Full name", "03231001239" as "PESEL", "600123456" as "Phone" and "zofia.maj@example.com" as "Email".
+4. Enter "Zofia Maj" as "Full name", "03231001239" as "PESEL" (your PESEL), "600123456" as "Phone" and "zofia.maj@example.com" as "Email".
 5. Click "Confirm booking".
+6. Click "Close" in the confirmation.
 
 **Expected result:**
-- The PESEL is a valid number for a person born on 10 March 2003, and the "Date of birth" field shows 2003-03-10.
-- No error is shown under "PESEL".
-- The booking is confirmed and listed in "My appointments" at 09:00.
+- The form accepts the details, and the "Date of birth" field shows 2003-03-10.
+- The confirmation names Dr. Marek Zając, the chosen Monday at 09:00 and Zofia Maj.
+- "My appointments" lists the new visit at 09:00.
 
-## US-09: Enter a phone number as the form suggests
+## US-09: Leave contact details for reminders
 
-As a patient, I want to type my phone number the way the field suggests so that I do not have to guess the format.
+As a patient, I want to give my phone number and e-mail so that the clinic can remind me about the visit.
 
 **Preconditions:** Demo data reset.
 
@@ -158,14 +159,14 @@ As a patient, I want to type my phone number the way the field suggests so that 
 1. Click "Dermatology", then click "Choose Dr. Ewa Lis".
 2. In the calendar, click the number of a Friday next week.
 3. Click "14:00".
-4. Read the hint inside the "Phone" field.
-5. Enter "Piotr Lewandowski" as "Full name", "85031501234" as "PESEL", "piotr.lewandowski@example.com" as "Email", and type the number from the hint into "Phone".
-6. Click "Confirm booking".
+4. Enter "Piotr Lewandowski" as "Full name", "85031501234" as "PESEL", "+48 600 123 456" as "Phone" and "piotr.lewandowski@example.com" as "Email".
+5. Click "Confirm booking".
+6. Click "Close" in the confirmation.
 
 **Expected result:**
-- The "Phone" field shows the example +48 600 123 456.
-- A phone number written in that format is accepted.
-- The booking is confirmed and listed in "My appointments" at 14:00.
+- The form accepts the phone number and e-mail.
+- The confirmation says it was sent to piotr.lewandowski@example.com.
+- "My appointments" lists the new visit at 14:00 with Dr. Ewa Lis.
 
 ## US-10: Compare times of two dermatologists
 
