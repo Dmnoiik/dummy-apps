@@ -135,13 +135,12 @@ As a busy shopper, I want to jot down one more item and move on to my meeting no
 **Steps:**
 1. Click "Groceries" in the "Notes" list.
 2. Click at the end of the text in "Note content", press Enter and type `- Honey`.
-3. Straight away (within a second), click "Meeting notes" in the "Notes" list.
-4. Wait two seconds.
-5. Click "Groceries", then click "Meeting notes".
+3. Click "Meeting notes" in the "Notes" list to check the agenda.
+4. Click "Groceries" to look over the list once more, then click "Meeting notes" again.
 
 **Expected result:**
 - After step 3 the editor shows "Meeting notes" with its attendees and the three agenda bullets.
-- After step 5 "Meeting notes" still reads "Attendees: Ola, Piotr, Kasia" followed by the bullets "Review the roadmap", "Assign owners" and "Book the next sync".
+- After step 4 "Meeting notes" still reads "Attendees: Ola, Piotr, Kasia" followed by the bullets "Review the roadmap", "Assign owners" and "Book the next sync".
 - "Groceries" shows "Oat milk", "Rye bread", "Tomatoes" and "Honey" as bullets.
 
 ## US-08: Empty the trash
