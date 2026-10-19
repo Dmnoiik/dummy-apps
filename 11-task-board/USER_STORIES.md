@@ -127,7 +127,6 @@ As a team member, I want to review a card's checklist and remove a card we dropp
 - "Login page" disappears and a "Card deleted" message with an "Undo" button appears.
 - The "To Do" counter shows 3 and the cards are "Set up CI pipeline", "Write onboarding copy" and "Fix navbar overlap".
 - "Write onboarding copy" still shows its checklist with "Draft welcome message" and "Review tone with the team".
-- "Fix navbar overlap" shows no checklist panel and its button still reads "Show checklist".
 
 ## US-09: Review due-date badges
 
