@@ -112,20 +112,22 @@ As a developer, I want to undo a deletion so that an accidental click does not l
 - "Login page" is back in "To Do", between "Set up CI pipeline" and "Fix navbar overlap".
 - "Write onboarding copy" stays in "Review", because it was moved after the deletion; "To Do" has three cards.
 
-## US-08: Tidy up the list while reading a checklist
+## US-08: Clean up cards that are no longer needed
 
-As a developer, I want to keep a checklist open while I remove an unrelated card so that I can continue reading it.
+As a team member, I want to review a card's checklist and remove a card we dropped so that the To Do list stays relevant.
 
 **Preconditions:** Demo data reset.
 
 **Steps:**
 1. Click "Show checklist" on "Write onboarding copy". The two checklist items appear.
 2. Click "Delete" on "Login page".
-3. Look at the checklist panels of the cards in "To Do".
+3. Read the "To Do" counter and the list of cards.
 
 **Expected result:**
-- The checklist remains open on "Write onboarding copy" and still shows "Draft welcome message" and "Review tone with the team".
-- "Fix navbar overlap" keeps its checklist closed, and its button still reads "Show checklist".
+- "Login page" disappears and a "Card deleted" message with an "Undo" button appears.
+- The "To Do" counter shows 3 and the cards are "Set up CI pipeline", "Write onboarding copy" and "Fix navbar overlap".
+- "Write onboarding copy" still shows its checklist with "Draft welcome message" and "Review tone with the team".
+- "Fix navbar overlap" shows no checklist panel and its button still reads "Show checklist".
 
 ## US-09: Review due-date badges
 
@@ -204,7 +206,7 @@ As a developer, I want to update a few cards in a row with Ctrl+S so that I can 
 4. Click the title "Fix navbar overlap", select "High" in "Priority" and press Ctrl+S.
 
 **Expected result:**
-- Each Ctrl+S shows exactly one "Saved" message and closes the dialog.
+- Each Ctrl+S saves the card, shows a "Saved" confirmation and closes the dialog.
 - At the end "Set up CI pipeline" is Low, "Login page" is Medium, "Write onboarding copy" is assigned to Ania and "Fix navbar overlap" is High.
 
 ## US-14: Reuse a card as a template
