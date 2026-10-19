@@ -45,9 +45,9 @@ for dir in "$ROOT"/[0-9][0-9]-*/; do
     cp -R "$dir/$(dist_dir "$name")/." "$OUT/$name/"
   else
     echo "Copying $name"
-    (cd "$dir" && tar --exclude=node_modules -cf - .) | (cd "$OUT/$name" && tar -xf -)
+    # Static apps: publish tracked files only.
+    (cd "$ROOT" && git ls-files -z -- "$name" | xargs -0 cp --parents -t "$OUT")
   fi
 done
 
-find "$OUT" -name QA_BUG_REPORT_KEY.md -delete
 echo "Site assembled in $OUT"
