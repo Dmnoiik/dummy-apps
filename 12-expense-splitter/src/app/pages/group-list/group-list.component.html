@@ -1,0 +1,72 @@
+<section class="page">
+  <div class="page-head">
+    <div>
+      <h1>Your groups</h1>
+      <p class="sub">Split costs with friends and keep track of who owes whom.</p>
+    </div>
+    <button type="button" class="btn primary" (click)="openDialog()">New group</button>
+  </div>
+
+  <ul class="cards">
+    @for (group of groups$ | async; track group.id) {
+      <li class="card">
+        <a [routerLink]="['/groups', group.id]" class="card-link">
+          <span class="card-title">{{ group.name }}</span>
+          <span class="card-meta">{{ group.members.join(', ') }}</span>
+          <span class="card-stats">
+            <span>{{ group.members.length }} people</span>
+            <span>{{ group.expenses.length }} expenses</span>
+            <span>{{ total(group) }} PLN</span>
+          </span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>
+
+@if (creating) {
+  <div class="backdrop">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="new-group-title">
+      <div class="dialog-header">
+        <h2 id="new-group-title">New group</h2>
+        <button type="button" class="icon-btn" aria-label="Close" (click)="closeDialog()">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <div class="field">
+          <label for="group-name">Group name</label>
+          <input id="group-name" type="text" [(ngModel)]="groupName" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="member-name">Member name</label>
+          <div class="inline">
+            <input
+              id="member-name"
+              type="text"
+              [(ngModel)]="memberName"
+              autocomplete="off"
+              (keydown.enter)="$event.preventDefault(); addPerson()"
+            />
+            <button type="button" class="btn" (click)="addPerson()">Add person</button>
+          </div>
+        </div>
+        @if (newMembers.length > 0) {
+          <ul class="chips" aria-label="Members">
+            @for (name of newMembers; track name) {
+              <li class="chip">
+                {{ name }}
+                <button type="button" class="chip-x" [attr.aria-label]="'Remove ' + name + ' from the list'" (click)="removePerson(name)">&times;</button>
+              </li>
+            }
+          </ul>
+        }
+        @if (error) {
+          <p class="error" role="alert">{{ error }}</p>
+        }
+        <div class="actions">
+          <button type="button" class="btn ghost" (click)="closeDialog()">Cancel</button>
+          <button type="button" class="btn primary" (click)="create()">Create group</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

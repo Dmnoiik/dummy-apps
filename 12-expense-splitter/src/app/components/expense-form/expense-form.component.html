@@ -1,0 +1,86 @@
+<div class="backdrop" (mousedown)="backdropClick($event)">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="expense-form-title">
+    <div class="dialog-header">
+      <h2 id="expense-form-title">{{ expense ? 'Edit expense' : 'Add expense' }}</h2>
+      <button type="button" class="icon-btn" aria-label="Close" (click)="close()">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+        <div class="grid">
+          <div class="field wide">
+            <label for="ex-desc">Description</label>
+            <input id="ex-desc" #description type="text" formControlName="description" autocomplete="off" />
+            @if (form.controls.description.touched && form.controls.description.hasError('required')) {
+              <p class="error">Enter a description</p>
+            }
+          </div>
+          <div class="field">
+            <label for="ex-amount">Amount</label>
+            <input id="ex-amount" type="text" inputmode="decimal" formControlName="amount" autocomplete="off" />
+            @if (form.controls.amount.touched && form.controls.amount.invalid) {
+              <p class="error">Enter a valid amount</p>
+            }
+          </div>
+          <div class="field">
+            <label for="ex-paid">Paid by</label>
+            <select id="ex-paid" formControlName="paidBy">
+              @for (m of members; track m) {
+                <option [value]="m">{{ m }}</option>
+              }
+            </select>
+          </div>
+          <div class="field">
+            <label for="ex-date">Date</label>
+            <input id="ex-date" type="date" formControlName="date" />
+            @if (form.controls.date.touched && form.controls.date.invalid) {
+              <p class="error">Pick a date</p>
+            }
+          </div>
+          <div class="field">
+            <label for="ex-cat">Category</label>
+            <select id="ex-cat" formControlName="category">
+              @for (c of categories; track c) {
+                <option [value]="c">{{ c }}</option>
+              }
+            </select>
+          </div>
+          <div class="field wide">
+            <label for="ex-method">Split method</label>
+            <select id="ex-method" formControlName="method">
+              @for (m of methods; track m.value) {
+                <option [value]="m.value">{{ m.label }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <fieldset class="people">
+          <legend>{{ method === 'equally' ? 'Split between' : unitHint }}</legend>
+          @if (method === 'equally') {
+            @for (m of members; track m) {
+              <label class="person check">
+                <input type="checkbox" [formControl]="included.controls[m]" />
+                <span>{{ m }}</span>
+              </label>
+            }
+          } @else {
+            @for (m of members; track m) {
+              <label class="person">
+                <span>{{ m }}</span>
+                <input type="text" inputmode="decimal" autocomplete="off" [formControl]="values.controls[m]" />
+              </label>
+            }
+          }
+        </fieldset>
+        @if (splitError) {
+          <p class="error" role="alert">{{ splitError }}</p>
+        }
+
+        <div class="actions">
+          <button type="button" class="btn ghost" (click)="close()">Cancel</button>
+          <button type="submit" class="btn primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+@if (group$ | async; as group) {
+  <section class="page">
+    <button type="button" class="btn ghost back" (click)="back()">&larr; Back to groups</button>
+
+    <header class="head">
+      <h1>{{ group.name }}</h1>
+      <ul class="members" aria-label="Members">
+        @for (name of group.members; track name) {
+          <li class="chip">
+            {{ name }}
+            <button type="button" class="chip-x" [attr.aria-label]="'Remove ' + name" (click)="removeMember(name)">&times;</button>
+          </li>
+        }
+      </ul>
+      <form class="add-member" (ngSubmit)="addMember()">
+        <label for="new-member" class="sr-only">New member</label>
+        <input id="new-member" name="newMember" type="text" placeholder="Add a person" autocomplete="off" [(ngModel)]="newMember" />
+        <button type="submit" class="btn">Add member</button>
+      </form>
+      @if (memberError) {
+        <p class="error" role="alert">{{ memberError }}</p>
+      }
+    </header>
+
+    <div class="layout">
+      <div class="main">
+        <div class="toolbar">
+          <div class="tabs" role="tablist">
+            <button type="button" role="tab" [attr.aria-selected]="tab === 'expenses'" [class.active]="tab === 'expenses'" (click)="tab = 'expenses'">Expenses</button>
+            <button type="button" role="tab" [attr.aria-selected]="tab === 'settle'" [class.active]="tab === 'settle'" (click)="tab = 'settle'">Settle up</button>
+          </div>
+          <button type="button" class="btn primary" (click)="openAdd()">Add expense</button>
+        </div>
+
+        @if (tab === 'expenses') {
+          <ul class="expenses" aria-label="Expenses">
+            @for (expense of sorted(group); track expense.id) {
+              <li class="expense">
+                <div class="expense-main">
+                  <div class="expense-top">
+                    <h3>{{ expense.description }}</h3>
+                    <span class="total">{{ format(expense.amount) }} PLN</span>
+                  </div>
+                  <p class="meta">
+                    <span class="date">{{ expense.date }}</span>
+                    <span class="tag">{{ expense.category }}</span>
+                    <span>Paid by {{ expense.paidBy }}</span>
+                  </p>
+                  <ul class="owed" aria-label="Split">
+                    @for (entry of owedEntries(expense); track entry.name) {
+                      <li>{{ entry.name }} {{ format(entry.amount) }} PLN</li>
+                    }
+                  </ul>
+                </div>
+                <div class="row-actions">
+                  <button type="button" class="btn small" [attr.aria-label]="'Edit ' + expense.description" (click)="openEdit(expense)">Edit</button>
+                  <button type="button" class="btn small ghost" [attr.aria-label]="'Delete ' + expense.description" (click)="deleteExpense(expense)">Delete</button>
+                </div>
+              </li>
+            } @empty {
+              <li class="empty">No expenses yet. Add the first one to start splitting.</li>
+            }
+          </ul>
+        } @else {
+          <app-settle-up [expenses]="group.expenses" [members]="group.members" />
+        }
+      </div>
+
+      <app-balances-panel [balances]="group.expenses | balancesOf: group.members" />
+    </div>
+
+    @if (formOpen) {
+      <app-expense-form [members]="group.members" [expense]="editing" (saved)="onSaved($event)" (cancelled)="closeForm()" />
+    }
+  </section>
+} @else {
+  <section class="page">
+    <button type="button" class="btn ghost back" (click)="back()">&larr; Back to groups</button>
+    <p class="empty">This group no longer exists.</p>
+  </section>
+}

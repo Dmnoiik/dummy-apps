@@ -1,0 +1,41 @@
+.settle {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+
+.lead {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--teal-soft);
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.arrow {
+  color: var(--coral);
+  font-weight: 800;
+}
+
+.done {
+  margin: 0;
+  font-weight: 600;
+  color: var(--teal);
+}

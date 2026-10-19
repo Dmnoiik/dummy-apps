@@ -1,0 +1,11 @@
+<header class="topbar">
+  <a class="brand" routerLink="/groups" aria-label="Halves home">
+    <span class="logo" aria-hidden="true"></span>
+    <span class="wordmark">Halves</span>
+  </a>
+  <button type="button" class="btn small ghost" (click)="resetDemo()">Reset demo data</button>
+</header>
+<main class="content">
+  <router-outlet />
+</main>
+<app-toast-host />

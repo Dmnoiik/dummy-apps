@@ -1,0 +1,72 @@
+.dialog-body {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 14px;
+}
+
+.field {
+  display: grid;
+  gap: 5px;
+  align-content: start;
+}
+
+.field.wide {
+  grid-column: 1 / -1;
+}
+
+.field label,
+legend {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.people {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.person input[type='text'] {
+  width: 120px;
+}
+
+.person.check {
+  justify-content: flex-start;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.error {
+  margin: 4px 0 0;
+  color: var(--rust);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

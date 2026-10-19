@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Assembles the complete static site into <outDir> (served under /dummy-apps/).
 set -euo pipefail
+export MSYS_NO_PATHCONV=1 MSYS2_ENV_CONV_EXCL='*'
 
 if [ $# -ne 1 ]; then
   echo "Usage: $0 <outDir>" >&2

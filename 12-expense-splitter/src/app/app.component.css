@@ -1,0 +1,47 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px max(16px, calc((100vw - 1100px) / 2));
+  background: var(--teal-ink);
+  color: #fff;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--coral) 50%, #f6efe3 50%);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.topbar .btn {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.topbar .btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 16px 64px;
+}

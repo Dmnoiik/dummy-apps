@@ -1,0 +1,59 @@
+.balances {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+li:last-child {
+  border-bottom: 0;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.amount {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.amount.pos {
+  color: var(--teal);
+  font-weight: 700;
+}
+
+.amount.neg {
+  color: var(--rust);
+  font-weight: 700;
+}
+
+.hint {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.empty {
+  color: var(--muted);
+}

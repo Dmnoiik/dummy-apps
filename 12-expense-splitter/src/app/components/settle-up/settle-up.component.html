@@ -1,0 +1,15 @@
+<section class="settle" aria-label="Suggested transfers">
+  @if (transfers.length > 0) {
+    <p class="lead">Suggested transfers to settle the group:</p>
+    <ul>
+      @for (t of transfers; track $index) {
+        <li>
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+          <span>{{ t.from }} pays {{ t.to }} {{ format(t.amount) }} PLN</span>
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="done">Everyone is settled up.</p>
+  }
+</section>

@@ -1,0 +1,8 @@
+<div class="toasts">
+  @for (toast of toasts.toasts$ | async; track toast.id) {
+    <div class="toast" role="status">
+      <span>{{ toast.message }}</span>
+      <button type="button" class="close" aria-label="Dismiss" (click)="toasts.dismiss(toast.id)">&times;</button>
+    </div>
+  }
+</div>

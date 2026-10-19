@@ -1,0 +1,154 @@
+:root {
+  --bg: #f7f2ea;
+  --surface: #fffdf9;
+  --sand: #ece4d6;
+  --ink: #23312f;
+  --muted: #6b7a76;
+  --line: #e4dbcc;
+  --teal: #127a6e;
+  --teal-ink: #0c4a43;
+  --teal-soft: #dcf0ec;
+  --coral: #ee6c4d;
+  --coral-ink: #b4472c;
+  --coral-soft: #fde6de;
+  --rust: #c2410c;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(35, 49, 47, 0.06), 0 3px 10px rgba(35, 49, 47, 0.05);
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--ink);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  line-height: 1.45;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  color: var(--teal-ink);
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+input[type='text'],
+input[type='date'],
+select {
+  width: 100%;
+  padding: 9px 11px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.btn:hover {
+  background: var(--sand);
+}
+
+.btn.primary {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background: #de5a3b;
+}
+
+.btn.ghost {
+  background: transparent;
+}
+
+.btn.small {
+  padding: 5px 11px;
+  font-size: 0.85rem;
+}
+
+.icon-btn {
+  border: 0;
+  background: transparent;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+  background: rgba(12, 40, 36, 0.5);
+}
+
+.dialog {
+  width: min(600px, 100%);
+  margin: auto;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(12, 40, 36, 0.35);
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 0;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.dialog-body {
+  padding: 14px 20px 20px;
+}

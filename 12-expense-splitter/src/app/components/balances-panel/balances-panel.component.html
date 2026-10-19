@@ -1,0 +1,14 @@
+<aside class="balances" aria-label="Balances">
+  <h2>Balances</h2>
+  <ul>
+    @for (row of rows; track row.name) {
+      <li>
+        <span class="name">{{ row.name }}</span>
+        <span class="amount" [class.pos]="row.amount > 0" [class.neg]="row.amount < 0">{{ format(row.amount) }}</span>
+      </li>
+    } @empty {
+      <li class="empty">No members yet.</li>
+    }
+  </ul>
+  <p class="hint">Positive means the group owes that person.</p>
+</aside>
